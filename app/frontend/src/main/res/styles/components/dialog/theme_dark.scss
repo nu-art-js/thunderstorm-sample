@@ -1,0 +1,13 @@
+@use '../../_DO-NOT-IMPORT/palette' as palette;
+
+@mixin dark {
+  //General
+  --dialog__content-background: #FFFFFF;
+
+  //Header
+  --dialog__header-background: #{palette.blue(2)};
+  --dialog__header-text-color: #FFFFFF;
+
+  //Fields
+  --dialog__field-text-color: #{palette.blue(3)};
+}

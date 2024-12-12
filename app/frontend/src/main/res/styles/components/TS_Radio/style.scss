@@ -1,0 +1,60 @@
+.ts-radio {
+  //Individual Options
+  .ts-radio__container {
+    //Label holds both button and text
+    label {
+      .ts-radio__button {
+
+      }
+
+      .ts-radio__label {
+
+      }
+    }
+  }
+
+  //Variations
+  &.label-radio {
+    min-height: 26px;
+    height: 100%;
+    border: 1px solid var(--ts-radio__border-color);
+    border-radius: 3px;
+    gap: 0;
+
+    .ts-radio__container {
+      height: 100%;
+      min-width: 30px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 0 !important;
+
+      .ts-radio__button {
+        display: none;
+      }
+
+      .ts-radio__label {
+        margin: 0;
+        padding: 0 10px;
+        font-size: 13px;
+        color: #A1AEB5;
+        white-space: pre-wrap;
+        height: 100%;
+        text-align: center;
+      }
+
+      &:not(:first-child) {
+        border-left: 1px solid var(--ts-radio__right-color);
+      }
+
+      &.checked {
+        background: #007CBE;
+        box-shadow: inset 0 3px 6px #00000029;
+
+        .ts-radio__label {
+          color: white;
+        }
+      }
+    }
+  }
+}

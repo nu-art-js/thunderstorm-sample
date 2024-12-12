@@ -1,0 +1,32 @@
+.ts-tabs {
+  .ts-tabs__tabs-header {
+    height: 40px;
+    margin-bottom: 8px;
+
+    .ts-tabs__tab {
+      background: var(--color__value-tabs-header-background);
+      border: none;
+      border-bottom: var(--border__general-solid-transparent);
+      color: var(--color__text__gray);
+      font-size: var(--workspace__default-font-size);
+      font-weight: var(--workspace__header-font-weight);
+
+      &:hover {
+        color: var(--color__text__focused-blue);
+        background: var(--color__value-tabs-header-background);
+      }
+
+      &.ts-tabs__focused {
+        background: var(--color__value-tabs-header-background);
+        color: var(--color__text__focused-blue);
+        border-bottom: var(--border__general-solid-light);
+      }
+    }
+  }
+
+  .ts-tabs__content {
+    flex-grow: 1;
+    border: none;
+    background: var(--color__background__general-panel);
+  }
+}

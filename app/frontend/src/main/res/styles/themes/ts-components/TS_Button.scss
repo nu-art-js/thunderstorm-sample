@@ -1,0 +1,30 @@
+@use '../../_DO-NOT-IMPORT/colors' as c;
+@use '../../_DO-NOT-IMPORT/palette' as p;
+
+[theme="light"] {
+  --color__button-background: #{p.blue(3)};
+  --color__button-background__disabled: #{p.black(3)};
+  --color__button-background__secondary: #{p.blue(1)};
+}
+
+
+.ts-button {
+  border-radius: 3px;
+  cursor: pointer;
+  min-width: 80px;
+  padding: 4px;
+  margin-inline: 8px;
+  text-align: center;
+  font-size: 16px;
+
+  color: white;
+  background: var(--color__button-background);
+
+  &.ts-button__disabled {
+    background: var(--color__button-background__disabled);
+  }
+
+  &.secondary {
+    background: var(--color__button-background__secondary);
+  }
+}

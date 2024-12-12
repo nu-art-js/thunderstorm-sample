@@ -1,0 +1,117 @@
+@use '../../styles/_DO-NOT-IMPORT/palette' as palette;
+
+@mixin customScrollbar($direction,$showOnlyOnHover: false) {
+  //Scrollbar
+  &::-webkit-scrollbar {
+    background-color: palette.gray(7);
+  }
+
+  //Scrollbar Handle
+  &::-webkit-scrollbar-thumb {
+    background-color: palette.blue(1);
+    border-radius: 4px;
+  }
+
+  //Direction Diff
+  @if $direction == 'horizontal' {
+    overflow-x: auto;
+    //noinspection ALL
+    @supports (overflow-x: overlay) {
+      overflow-x: overlay;
+    }
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+  }
+
+  @if $direction == 'vertical' {
+    overflow-y: auto;
+    //noinspection ALL
+    @supports (overflow-y: overlay) {
+      overflow-y: overlay;
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+  }
+
+  @if $direction == 'both' {
+    overflow: auto;
+    //noinspection ALL
+    @supports (overflow: overlay) {
+      overflow: overlay;
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  @if $showOnlyOnHover {
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-thumb {
+      visibility: hidden;
+    }
+
+    &:hover {
+      &::-webkit-scrollbar,
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+      }
+    }
+  }
+}
+
+@mixin fancyDropDown {
+  .ts-overlay {
+    background: transparent;
+  }
+
+  .ts-dropdown__header {
+    border: 2px solid black;
+    border-radius: 10px;
+    position: relative;
+
+    .ts-input {
+      background: transparent;
+      padding: 0 5px;
+      border: none;
+      font: {
+        size: 13px;
+        weight: bold;
+      }
+    }
+  }
+
+  .ts-dropdown__items-container {
+    border: 2px solid black;
+    border-top: none;
+    padding-top: 18px;
+    transform: translateY(-18px);
+
+    @include customScrollbar('both');
+
+    .ts-dropdown__unselect-item {
+      font-size: 13px;
+    }
+
+    .ts-dropdown__items {
+      overflow-y: visible;
+      border: none
+    }
+
+    .ts-tree__node {
+      .node-data {
+        font-size: 13px;
+      }
+    }
+
+    &.inverted {
+      border-top: 2px solid black;
+      border-bottom: none;
+      padding-top: 0;
+      padding-bottom: 18px;
+      transform: translateY(18px);
+    }
+  }
+}

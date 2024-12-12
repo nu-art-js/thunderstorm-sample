@@ -1,0 +1,35 @@
+@use "../../index" as *;
+
+.ts-icon {
+  width: 24px;
+}
+
+.ts-icon__v4 {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  @include icon-style-v4(var(--ts-icon__default-color), var(--ts-icon__hover-color), var(--ts-icon__clicked-color));
+}
+
+.ts-icon__small {
+  width: 16px;
+  height: 16px;
+}
+
+.info-circle {
+  width: 22px;
+  height: 22px;
+  text-align: -webkit-center;
+  display: inline-block;
+  border: 1px solid var(--ts-icon__info-color);
+  border-radius: 50%;
+
+  .ts-icon__v4 {
+    @include icon-style-v4(var(--ts-icon__info-color));
+  }
+}
+
+.icon--wrapper {
+  width: 24px;
+  height: 24px;
+}

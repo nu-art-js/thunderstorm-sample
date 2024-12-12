@@ -1,0 +1,17 @@
+# Global
+**/.DS_Store
+
+# Node
+node_modules
+
+# Thunderstorm
+dist
+dist-test
+docs
+build
+_package.json
+package-lock.json
+src/main/config.ts
+src/sw/index.js
+
+.eslintrc.js

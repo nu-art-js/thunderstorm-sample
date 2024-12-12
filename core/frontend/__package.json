@@ -1,0 +1,24 @@
+{
+  "name": "@app/core-frontend",
+  "version": "$APP_VERSION",
+  "description": "Core FE",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "directory": "dist",
+    "linkDirectory": true
+  },
+  "dependencies": {
+    "@nu-art/thunderstorm": "workspace:*",
+    "@nu-art/ts-common": "workspace:*",
+    "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1"
+  }
+}

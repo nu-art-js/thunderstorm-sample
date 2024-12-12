@@ -1,0 +1,6 @@
+@use '../../_DO-NOT-IMPORT/palette' as palette;
+
+@mixin dark {
+  --ts-checkbox__border-color: #{palette.black(6)};
+  --ts-checkbox__right-color: #{palette.blue(2)};
+}

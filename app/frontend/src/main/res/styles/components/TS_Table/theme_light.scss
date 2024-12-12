@@ -1,0 +1,16 @@
+@use '../../_DO-NOT-IMPORT/palette' as palette;
+
+@mixin light {
+  //General
+  --table__border-color: #{palette.black(3)};
+  //Header
+  --table__header-text-color: #000000;
+  --table__header-background-color: #{palette.black(7)};
+
+  //Body
+  --table__body-text-color: #000000;
+
+  //Row
+  --table__body-row-background-color: #FFFFFF;
+  --table__body-row-background-selected: #{palette.blue(6)};
+}

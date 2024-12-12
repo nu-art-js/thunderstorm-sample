@@ -1,0 +1,31 @@
+.ts-input {
+  width: unset;
+  height: 30px;
+  padding-inline: 4px;
+  border-radius: unset;
+  border: 1px solid black;
+
+
+  &[data-error-level="error"] {
+    border-color: red;
+  }
+
+  &:focus-visible {
+    outline: unset;
+    border-bottom: 1px solid #3ca0c6;
+  }
+
+}
+
+input {
+
+  @extend .ts-input;
+
+  &[type="text"] {
+    padding-block: unset;
+  }
+
+  &[type=number]:hover {
+    appearance: unset;
+  }
+}

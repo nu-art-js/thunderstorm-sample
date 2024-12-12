@@ -1,0 +1,6 @@
+@use '../../_DO-NOT-IMPORT/palette' as palette;
+
+@mixin light {
+  --ts-radio__border-color: #{palette.blue(6)};
+  --ts-radio__right-color: #{palette.blue(2)};
+}

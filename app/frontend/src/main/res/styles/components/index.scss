@@ -1,0 +1,43 @@
+//Imports
+@use '_app' as app;
+@use 'dialog' as dialog;
+@use 'TS_Table' as table;
+@use 'TS_Icons' as icons;
+@use 'TS_PropRenderer' as propRenderer;
+@use 'TS_Radio' as radio;
+@use 'TS_Checkbox' as checkbox;
+@use 'TS_Dialog' as tsDialog;
+
+//Defaults
+@forward "_app/style";
+@forward "dialog/style";
+@forward "TS_Table/style";
+@forward "TS_Icons/style";
+@forward "TS_PropRenderer/style";
+@forward "TS_Radio/style";
+@forward "TS_Checkbox/style";
+@forward "TS_Dialog/style";
+
+//Light Theme
+body[theme='light'] {
+  @include app.light;
+  @include dialog.light;
+  @include table.light;
+  @include icons.light;
+  @include propRenderer.light;
+  @include radio.light;
+  @include checkbox.light;
+  @include tsDialog.light;
+}
+
+//Dark Theme
+body[theme='dark'] {
+  @include app.dark;
+  @include dialog.dark;
+  @include table.dark;
+  @include icons.dark;
+  @include propRenderer.dark;
+  @include radio.dark;
+  @include checkbox.dark;
+  @include tsDialog.dark;
+}

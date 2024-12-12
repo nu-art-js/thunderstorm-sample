@@ -1,0 +1,42 @@
+@use '@nu-art/ts-styles' as styles;
+
+.ts-multi-select__list {
+  width: 700px;
+  min-height: 100px;
+  border: 1px solid #484646;
+  border-radius: 4px;
+  padding: 10px;
+  gap: 10px;
+  align-items: flex-start;
+
+  .ts-dropdown__header {
+    background: #00BCF144;
+    padding-inline: 10px;
+  }
+
+  .ts-multi-select__list-value {
+    border: 1px solid #484646;
+    border-radius: 4px;
+    min-height: 30px;
+    padding: 0 10px;
+    gap: 4px;
+    font-size: 14px;
+    background: #00BCF144;
+    color: #484646;
+
+    .icon--wrapper {
+      border-right: 1px solid #484646;
+      height: 100%;
+      width: 30px;
+      margin-left: -10px;
+
+      @include styles.mouseInteractiveBackground(transparent, #ededed);
+      @include styles.mouseInteractiveIcon(#484646);
+
+      svg {
+        height: 12px;
+        width: 12px;
+      }
+    }
+  }
+}

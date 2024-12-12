@@ -1,0 +1,59 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "baseUrl": "./",
+    "outDir": "../../build",
+    "rootDir": ".",
+    "jsx": "react",
+    "lib": [
+      "es2015",
+      "es5",
+      "es6",
+      "es7",
+      "dom"
+    ],
+    "declaration": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "module": "commonjs",
+    "sourceMap": true,
+    "strict": true,
+    "paths": {
+      "@styles/*": [
+        "res/styles/*"
+      ],
+      "@res/*": [
+        "res/*"
+      ],
+      "@pah/*": [
+        "app/pah/*"
+      ],
+      "@consts/*": [
+        "app/consts/*"
+      ],
+      "@modules/*": [
+        "modules/*"
+      ],
+      "@component/*": [
+        "app/components/*"
+      ],
+      "@dialog/*": [
+        "app/dialogs/*"
+      ],
+      "@form/*": [
+        "app/form/*"
+      ],
+      "@page/*": [
+        "app/pages/*"
+      ],
+      "@renderer/*": [
+        "app/renderers/*"
+      ]
+    }
+  },
+  "esModuleInterop": true,
+  "module": "ES2020"
+}

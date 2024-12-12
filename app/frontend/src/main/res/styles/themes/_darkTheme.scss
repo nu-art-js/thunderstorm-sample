@@ -1,0 +1,6 @@
+@use '../_DO-NOT-IMPORT/palette' as p;
+
+[theme="dark"] {
+  --header--background: #{p.amber(7)};
+  --text-color: #{p.amber(7)};
+}

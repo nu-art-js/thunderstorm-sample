@@ -1,0 +1,13 @@
+@use '../../index' as p;
+
+@mixin dark {
+  --ts-icon__default-color: #{p.black(2)};
+  --ts-icon__hover-color: #{p.black(3)};
+  --ts-icon__clicked-color: #{p.black(5)};
+  --ts-icon__disabled-color: #{p.black(7)};
+
+  --ts-icon__info-color: #{p.blue(7)};
+  --ts-icon__warning-color: #{p.gold(2)};
+  --ts-icon__error-color: #{p.amber(2)};
+
+}

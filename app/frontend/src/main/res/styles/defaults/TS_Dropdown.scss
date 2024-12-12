@@ -1,0 +1,57 @@
+.ts-dropdown {
+  //height: 30px;
+  flex-shrink: 1;
+  //flex-shrink: 0;
+
+  &[data-error-level="error"] {
+    .ts-dropdown__header {
+      border-color: red;
+    }
+  }
+
+  .ts-dropdown__header {
+    border: 1px solid black;
+    border-radius: unset;
+    padding-block: 4px;
+    background: white;
+
+    //.ts-input {
+    //  @extend %match_height;
+    //  width: 0;
+    //  flex-grow: 1;
+    //  min-height: unset;
+    //  background-color: transparent;
+    //  border: none;
+    //  padding-block: 0;
+    //
+    //  &:focus-visible {
+    //    outline: none;
+    //  }
+    //}
+
+    & > * {
+      font-size: 14px;
+    }
+
+    .ts-dropdown__placeholder {
+      font-size: 14px;
+      padding-block: unset;
+      padding-inline: 2px;
+
+      & > * {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .ts-tree__node {
+    text-align: start;
+    padding-inline: 2px !important;
+    padding-block: 4px !important;
+
+    & > * {
+      font-size: 14px;
+    }
+
+  }
+}

@@ -1,0 +1,17 @@
+@use '../_DO-NOT-IMPORT/palette' as p;
+
+
+:root {
+  //Fonts
+  --font-size: 1rem;
+  --font-family-main: 'Open Sans', sans-serif;
+
+  //Border
+  --border-color: #{p.amber(7)};
+  --border: 2px solid #{p.black(1)};
+  --border-radius: 4px;
+
+  //Transitions
+  --linearTransition200: all linear 200ms;
+  --easeTransition200: all ease-in-out 200ms;
+}

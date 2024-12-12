@@ -1,0 +1,6 @@
+@use '../../index' as p;
+
+@mixin light {
+
+  --prop-renderer__label-color: #{p.blue(1)};
+}
