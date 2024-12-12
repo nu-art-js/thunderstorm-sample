@@ -22,7 +22,9 @@ const KM_Local: FirebaseEnvConfig<'local'> = {
 	},
 	firebase: {
 		listener: {
-			config: {my-firebase - project - prod}
+// @ts-ignore
+			config: {
+			}
 		}
 	},
 	otherConfig: {
@@ -46,7 +48,8 @@ const KM_Dev: FirebaseEnvConfig<'dev'> = {
 	},
 	firebase: {
 		listener: {
-			config: {my-firebase - project - prod}
+// @ts-ignore
+			config: {}
 		}
 	},
 	otherConfig: {
@@ -92,7 +95,7 @@ const KM_Envs = [
 
 export const AppConfig_PetitFawnManager = {
 	...Default_FirebaseProjectConfig,
-	name: 'Petit Fawn - Manager',
+	name: 'My App',
 	envs: KM_Envs,
 	ssl: {
 		pathToKey: `${__dirname}/.ssl/server-key.pem`,

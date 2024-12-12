@@ -2,6 +2,7 @@ import {ProjectConfigV2} from '@nu-art/build-and-install/v2/project/types';
 import * as fs from 'fs';
 import {BadImplementationException, lastElement} from '@nu-art/ts-common';
 import {
+	App,
 	Unit_Core,
 	Unit_Root,
 } from './units/units';
@@ -57,12 +58,15 @@ export default async () => {
 		condition: () => !RuntimeParams.allLogs
 	});
 
-	runner.registerUnits([
-		                     Unit_Root,
-		                     Unit_Core.shared,
-		                     Unit_Core.frontend,
-		                     Unit_Core.backend,
-	                     ]);
+	const units = [
+		Unit_Root,
+		Unit_Core.shared,
+		Unit_Core.frontend,
+		Unit_Core.backend,
+		App.backend,
+		App.frontend,
+	];
+	runner.registerUnits(units);
 
 	phase_DeployBackend.unitFilter = (unit) => {
 		return !!unit.config.key.match(new RegExp(RuntimeParams.deployBackend))?.[0];
