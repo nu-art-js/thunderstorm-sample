@@ -32,6 +32,8 @@
     "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/user-account": "$THUNDERSTORM_SDK_VERSION",
+    "@app/core-shared": "$APP_VERSION",
+    "@app/core-frontend": "$APP_VERSION",
     "file-loader": "^6.2.0",
     "moment": "$MOMENT_PKG_VERSION",
     "react": "$REACT_PKG_VERSION",
