@@ -28,7 +28,6 @@
     "debug": "bash launch-server.sh --debug"
   },
   "dependencies": {
-    "@app/supply-chain": "$APP_VERSION",
     "@google-cloud/firestore": "^4.8.1",
     "https": "^1.0.0",
     "net": "^1.0.2",

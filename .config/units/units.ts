@@ -15,12 +15,19 @@ export const Unit_Core = {
 
 export const App = {
 	backend: new Unit_FirebaseFunctionsApp({
-		                                       key: 'app-backend', label: 'Backend', pathToPackage: 'app/backend' as RelativePath, output: 'dist',
+		                                       key: 'app-backend',
+		                                       label: 'Backend',
+		                                       pathToPackage: 'app/backend' as RelativePath,
+		                                       output: 'dist',
 		                                       firebaseConfig: AppConfig
 	                                       }),
 	frontend: new Unit_FirebaseHostingApp({
-		                                      key: 'app-frontend', label: 'Frontend', pathToPackage: 'app-frontend' as RelativePath, output: 'dist',
-		                                      customTSConfig: true, firebaseConfig: AppConfig,
+		                                      key: 'app-frontend',
+		                                      label: 'Frontend',
+		                                      pathToPackage: 'app/frontend' as RelativePath,
+		                                      output: 'dist',
+		                                      customTSConfig: true,
+		                                      firebaseConfig: AppConfig,
 	                                      })
 
 };

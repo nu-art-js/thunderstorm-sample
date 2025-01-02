@@ -13,8 +13,8 @@
     "linkDirectory": true
   },
   "dependencies": {
-    "@nu-art/thunderstorm": "workspace:*",
-    "@nu-art/ts-common": "workspace:*",
+    "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
+    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/firebase": "$THUNDERSTORM_SDK_VERSION",
     "moment": "^2.29.4"
   },

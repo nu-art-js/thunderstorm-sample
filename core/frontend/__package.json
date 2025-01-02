@@ -13,11 +13,18 @@
     "linkDirectory": true
   },
   "dependencies": {
-    "@nu-art/thunderstorm": "workspace:*",
-    "@nu-art/ts-common": "workspace:*",
+    "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
+    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
+    "react": "$REACT_PKG_VERSION",
+    "react-dom": "$REACT_DOM_PKG_VERSION",
+    "react-router-dom": "$REACT_ROUTER_DOM_PKG_VERSION",
     "moment": "^2.29.4"
   },
   "devDependencies": {
+    "@types/papaparse": "^5.3.14",
+    "@types/react": "$REACT_TYPES_VERSION",
+    "@types/react-dom": "$REACT_DOM_TYPES_VERSION",
+    "@types/react-router-dom": "$REACT_ROUTER_DOM_TYPES_VERSION",
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1"
   }

@@ -108,6 +108,7 @@ export default async () => {
 			'GOOGLE_SPREADSHEET_PKG_VERSION': '^4.0.0',
 			'DTHREE_PKG_VERSION': '^7.9.0',
 			'GOOGLE_TRANSLATE_PKG_VERSION': '^8.2.0',
+			'WEBPACK_PKG_VERSION': '5.95.0',
 		},
 		defaultFileRoutes: {
 			firebaseConfig: {

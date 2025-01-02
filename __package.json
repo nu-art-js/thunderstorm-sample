@@ -1,5 +1,5 @@
 {
-  "name": "@app/shipify",
+  "name": "@app/sample-project",
   "version": "1.0.0",
   "private": true,
   "main": "./dist/index.js",

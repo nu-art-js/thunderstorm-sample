@@ -24,13 +24,6 @@
     "start": "webpack-dev-server --config webpack.config.ts --env app.env=local --open --mode development "
   },
   "dependencies": {
-    "@app/common": "$APP_VERSION",
-    "@app/customer-relation": "$APP_VERSION",
-    "@app/tools": "$APP_VERSION",
-    "@app/store": "$APP_VERSION",
-    "@app/supply-chain": "$APP_VERSION",
-    "@app/product-template": "$APP_VERSION",
-    "@infra/translations": "$APP_VERSION",
     "@nu-art/ts-focused-object": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/ts-styles": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/ts-openai": "$THUNDERSTORM_SDK_VERSION",
@@ -45,6 +38,11 @@
     "react-datepicker": "$REACT_DATE_PICKER_PKG_VERSION",
     "react-dom": "$REACT_DOM_PKG_VERSION",
     "react-router-dom": "$REACT_ROUTER_DOM_PKG_VERSION",
+    "webpack": "5.95.0",
+    "webpack-cli": "^5.1.0",
+    "webpack-dev-server": "^4.15.0",
+    "webpack-manifest-plugin": "^5.0.0",
+    "write-file-webpack-plugin": "^4.5.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.3.1",
@@ -74,11 +72,8 @@
     "ts-loader": "^8.2.0",
     "xml-formatter": "^2.6.0",
     "url-loader": "^4.1.1",
-    "webpack": "^5.64.1",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.5.0",
-    "webpack-manifest-plugin": "^4.0.2",
-    "write-file-webpack-plugin": "^4.5.1",
-    "vm-browserify": "latest"
+    "@types/webpack": "^5.28.0",
+    "vm-browserify": "latest",
+    "typescript": "$TYPESCRIPT_PKG_VERSION"
   }
 }
