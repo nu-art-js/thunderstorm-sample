@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import * as webpack from 'webpack';
 import * as path from 'path';
+import * as webpack from 'webpack';
 import {CleanWebpackPlugin} from 'clean-webpack-plugin';
 import 'webpack-dev-server';
 import {WebPackEnvConfig, WebPackEnvs} from './_webpack/types';
@@ -15,7 +15,7 @@ const packageJson = require('./package.json');
 // const swChunkName = 'pubsub-sw';
 const outputFolder = path.resolve(__dirname, `dist`);
 const sourcePath = path.join(__dirname, './src');
-const swFolder = path.join(__dirname, './src/sw/');
+// const swFolder = path.join(__dirname, './src/sw/');
 const mainFolder = path.join(__dirname, './src/main/');
 const mainConfig = path.join(__dirname, './src/main/tsconfig.json');
 

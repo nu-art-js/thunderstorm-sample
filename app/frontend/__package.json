@@ -76,6 +76,6 @@
     "url-loader": "^4.1.1",
     "@types/webpack": "^5.28.0",
     "vm-browserify": "latest",
-    "typescript": "$TYPESCRIPT_PKG_VERSION"
+    "typescript": "5.0.4"
   }
 }
