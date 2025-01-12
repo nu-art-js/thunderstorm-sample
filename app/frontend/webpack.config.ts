@@ -87,18 +87,6 @@ const webPackConfig = (params: ConfigParams): webpack.Configuration => {
 				crypto: require.resolve('crypto-browserify'),
 				vm: require.resolve('vm-browserify')
 			},
-			alias: {
-				'@modules': path.resolve(__dirname, 'src/main/modules'),
-				'@styles': path.resolve(__dirname, 'src/main/res/styles'),
-				'@res': path.resolve(__dirname, 'src/main/res'),
-				'@consts': path.resolve(__dirname, 'src/main/app/consts'),
-				'@pah': path.resolve(__dirname, 'src/main/app/pah'),
-				'@form': path.resolve(__dirname, 'src/main/app/form'),
-				'@page': path.resolve(__dirname, 'src/main/app/pages'),
-				'@component': path.resolve(__dirname, 'src/main/app/components'),
-				'@dialog': path.resolve(__dirname, 'src/main/app/dialogs'),
-				'@renderer': path.resolve(__dirname, 'src/main/app/renderers'),
-			},
 			extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.scss']
 		},
 

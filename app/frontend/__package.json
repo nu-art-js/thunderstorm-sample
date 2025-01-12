@@ -68,7 +68,7 @@
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
     "sass": "^1.49.9",
-    "sass-loader": "^12.4.0",
+    "sass-loader": "^16.0.4",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.0",
     "ts-loader": "^8.2.0",

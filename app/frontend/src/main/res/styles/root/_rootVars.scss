@@ -1,5 +1,4 @@
-@use '../_DO-NOT-IMPORT/palette' as p;
-
+@use '@nu-art/ts-styles' as tsStyles;
 
 :root {
   //Fonts
@@ -7,8 +6,8 @@
   --font-family-main: 'Open Sans', sans-serif;
 
   //Border
-  --border-color: #{p.amber(7)};
-  --border: 2px solid #{p.black(1)};
+  --border-color: #{tsStyles.ochre(7)};
+  --border: 2px solid #{tsStyles.black(1)};
   --border-radius: 4px;
 
   //Transitions

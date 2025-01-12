@@ -1,7 +1,0 @@
-@use '../../_DO-NOT-IMPORT/colors' as c;
-@use '../../_DO-NOT-IMPORT/palette' as p;
-
-[theme="light"] {
-  //--color__pages-background: #{p.black(10)};
-  --color__pages-background: white;
-}

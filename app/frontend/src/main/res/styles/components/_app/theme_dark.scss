@@ -1,8 +1,0 @@
-@use '../../index' as p;
-
-@mixin dark {
-  --separator-color: #{p.black(9)};
-
-  --tags--inner-color: #{p.blue(2)};
-  --tags--outer-color: #{p.blue(9)};
-}
