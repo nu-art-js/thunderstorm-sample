@@ -1,0 +1,48 @@
+@use '@nu-art/ts-styles' as tsStyles;
+
+#landing-page {
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: tsStyles.gray-blue(3);
+  gap: 50px;
+
+  svg {
+    width: 400px;
+    height: 400px;
+    animation: rotate 10s infinite linear;
+  }
+
+  .landing-page__message {
+    font: {
+      size: 32px;
+      weight: bold;
+    }
+    color: white;
+  }
+
+  .ts-button {
+    margin: 0;
+    padding: 10px 15px;
+    font: {
+      size: 24px;
+      weight: bold;
+    }
+    cursor: pointer;
+    transition: background 200ms linear;
+    color: white;
+
+    @include tsStyles.mouse-interactive-background(tsStyles.ochre(3),tsStyles.ochre(2))
+
+  }
+}
+
+@keyframes rotate {
+  0% {
+    rotate: 0deg;
+  }
+
+  100% {
+    rotate: 360deg;
+  }
+}
