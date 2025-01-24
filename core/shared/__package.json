@@ -13,36 +13,9 @@
     "linkDirectory": true
   },
   "dependencies": {
-    "@nu-art/ts-openai": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/google-services": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/firebase": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/file-upload": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-workspace": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/user-account": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/slack": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-styles": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-pdf": "$THUNDERSTORM_SDK_VERSION",
-    "google-spreadsheet": "$GOOGLE_SPREADSHEET_PKG_VERSION",
-    "@google-cloud/translate": "$GOOGLE_TRANSLATE_PKG_VERSION",
-    "moment": "$MOMENT_PKG_VERSION",
-    "react": "$REACT_PKG_VERSION",
-    "react-datepicker": "$REACT_DATE_PICKER_PKG_VERSION",
-    "react-dom": "$REACT_DOM_PKG_VERSION",
-    "react-router-dom": "$REACT_ROUTER_DOM_PKG_VERSION",
-    "shopify-api-node": "$SHOPIFY_PKG_VERSION"
+    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION"
   },
   "devDependencies": {
-    "@types/google-spreadsheet": "$GOOGLE_SPREADSHEET_TYPE_VERSION",
-    "@types/request": "^2.48.8",
-    "@types/react": "$REACT_TYPES_VERSION",
-    "@types/google.maps": "^3.46.0",
-    "@types/react-datepicker": "$REACT_DATE_PICKER_TYPES_VERSION",
-    "@types/react-dom": "$REACT_DOM_TYPES_VERSION",
-    "@types/react-router": "$REACT_ROUTER_TYPES_VERSION",
-    "@types/react-router-dom": "$REACT_ROUTER_DOM_TYPES_VERSION",
-    "@types/react-select": "^3.0.8",
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1"
   }
