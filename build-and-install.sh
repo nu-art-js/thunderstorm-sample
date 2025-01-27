@@ -57,7 +57,7 @@ if [[ ${freshStart} || ! -e "./package.json" ]]; then
 	"name": "temp",
 	"version": "0.0.1",
 	"devDependencies": {
-		"@types/node": "^18.15.0",
+		"@types/node": "^22.0.0",
 		"@nu-art/build-and-install": "~0.300.8",
 		"@nu-art/commando": "~0.300.8",
 		"@nu-art/ts-common": "~0.300.8"
@@ -68,7 +68,7 @@ EOF
   rm package-lock.json
   rm pnpm-lock.yaml
   rm -rf node_modules
-  npm i -g ts-node@latest typescript@5.0.4 firebase-tools@latest
+  npm i -g ts-node@latest typescript@latest firebase-tools@latest
 	npm i
 fi
 

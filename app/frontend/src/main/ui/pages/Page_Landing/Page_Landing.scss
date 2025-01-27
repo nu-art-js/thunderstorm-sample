@@ -32,7 +32,7 @@
     transition: background 200ms linear;
     color: white;
 
-    @include tsStyles.mouse-interactive-background(tsStyles.ochre(3),tsStyles.ochre(2))
+    @include tsStyles.mouseInteractiveBackground(tsStyles.ochre(3),tsStyles.ochre(2))
 
   }
 }

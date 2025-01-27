@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
     "target": "es2017",
+    "baseUrl": "./",
+    "outDir": "../../build",
+    "rootDir": ".",
     "jsx": "react",
     "lib": [
+      "es2015",
+      "es5",
       "es6",
       "es7",
       "dom"
@@ -15,7 +20,7 @@
     "noUnusedLocals": true,
     "module": "commonjs",
     "sourceMap": true,
-    "strict": true
+    "strict": true,
   },
   "esModuleInterop": true,
   "module": "ES2020"

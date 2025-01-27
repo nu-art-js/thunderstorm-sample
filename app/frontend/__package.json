@@ -24,27 +24,21 @@
     "start": "webpack-dev-server --config webpack.config.ts --env app.env=local --open --mode development "
   },
   "dependencies": {
+    "@app/core-shared": "$APP_VERSION",
+    "@app/core-frontend": "$APP_VERSION",
     "@nu-art/ts-focused-object": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/ts-styles": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-openai": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/firebase": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/permissions": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
     "@nu-art/user-account": "$THUNDERSTORM_SDK_VERSION",
-    "@app/core-shared": "$APP_VERSION",
-    "@app/core-frontend": "$APP_VERSION",
     "file-loader": "^6.2.0",
     "moment": "$MOMENT_PKG_VERSION",
     "react": "$REACT_PKG_VERSION",
     "react-datepicker": "$REACT_DATE_PICKER_PKG_VERSION",
     "react-dom": "$REACT_DOM_PKG_VERSION",
-    "react-router-dom": "$REACT_ROUTER_DOM_PKG_VERSION",
-    "webpack": "5.95.0",
-    "webpack-cli": "^5.1.0",
-    "webpack-dev-server": "^4.15.0",
-    "webpack-manifest-plugin": "^5.0.0",
-    "write-file-webpack-plugin": "^4.5.0"
+    "react-router-dom": "$REACT_ROUTER_DOM_PKG_VERSION"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.3.1",
@@ -61,6 +55,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.0.0",
     "css-loader": "^6.5.1",
+    "csstype": "^2.6.7",
     "firebase": "$FIREBASE_PKG_VERSION",
     "history": "^4.9.0",
     "html-beautify-webpack-plugin": "^1.0.5",
@@ -68,14 +63,18 @@
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
     "sass": "^1.49.9",
-    "sass-loader": "^16.0.4",
+    "qs": "^6.6.0",
+    "sass-loader": "$SASS_LOADER_PKG_VERSION",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.0",
     "ts-loader": "^8.2.0",
     "xml-formatter": "^2.6.0",
     "url-loader": "^4.1.1",
-    "@types/webpack": "^5.28.0",
-    "vm-browserify": "latest",
-    "typescript": "5.0.4"
+    "webpack": "$WEBPACK_PKG_VERSION",
+    "webpack-cli": "^5.1.0",
+    "webpack-dev-server": "^4.15.0",
+    "webpack-manifest-plugin": "^5.0.0",
+    "write-file-webpack-plugin": "^4.5.0",
+    "vm-browserify": "latest"
   }
 }
