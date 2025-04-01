@@ -3,15 +3,13 @@
 
 # Node
 node_modules
-
-# Thunderstorm
 dist
 dist-test
-docs
+
+# Thunderstorm
 build
 package.json
 package-lock.json
-config.ts
 
 .eslintrc.js
 src/main/tsconfig.json

@@ -1,0 +1,14 @@
+import {DBApiConfigV3, ModuleBE_BaseDB,} from '@nu-art/thunderstorm/backend';
+import {DBDef_{{entityName}}, DBProto_{{entityName}} } from '@app/{{libName}}-shared/_entity/{{packageName}}';
+
+type Config = DBApiConfigV3<DBProto_{{entityName}}> & {};
+
+export class ModuleBE_{{entityName}}DB_Class
+	extends ModuleBE_BaseDB<DBProto_{{entityName}}, Config> {
+
+	constructor() {
+		super(DBDef_{{entityName}});
+	}
+}
+
+export const ModuleBE_{{entityName}}DB = new ModuleBE_{{entityName}}DB_Class();

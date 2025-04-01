@@ -1,0 +1,17 @@
+import {ModuleFE_BaseApi} from '@nu-art/thunderstorm/frontend';
+import {DispatcherDef, ThunderDispatcherV3} from '@nu-art/thunderstorm/frontend/core/db-api-gen/types';
+import {DBDef_{{entityName}}, DBProto_{{entityName}} } from '@app/{{libName}}-shared/_entity/person';
+
+export type DispatcherType_{{entityName}} = DispatcherDef<DBProto_{{entityName}}, `__on{{entityName}}Updated`>;
+export const dispatch_on{{entityName}}Updated = new ThunderDispatcherV3<DispatcherType_{{entityName}}>('__on{{entityName}}Updated');
+
+export class ModuleFE_{{entityName}}_Class
+	extends ModuleFE_BaseApi<DBProto_{{entityName}}> {
+
+	constructor() {
+		super(DBDef_{{entityName}}, dispatch_on{{entityName}}Updated);
+	}
+}
+
+export const ModuleFE_{{entityName}} = new ModuleFE_{{entityName}}_Class();
+

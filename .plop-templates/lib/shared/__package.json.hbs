@@ -1,0 +1,28 @@
+{
+  "name": "@app/{{libName}}-shared",
+  "version": "$APP_VERSION",
+  "description": "{{libName}} Shared",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "directory": "{{outputDir}}",
+    "linkDirectory": true
+  },
+  "dependencies": {
+    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION"
+  },
+  "devDependencies": {
+    "@types/chai": "$CHAI_TYPES_VERSION",
+    "@types/mocha": "$MOCHA_TYPES_VERSION"
+  },
+  "private": {{isPrivate}},
+  "bai": {
+    "label": "{{libName}} Shared",
+    "pathToConfig": "./config.ts",
+    "customTSConfig": false
+  }
+}

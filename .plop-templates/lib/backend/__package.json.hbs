@@ -1,0 +1,31 @@
+{
+  "name": "@app/{{libName}}-backend",
+  "version": "$APP_VERSION",
+  "description": "{{libName}} Backend",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "directory": "{{outputDir}}",
+    "linkDirectory": true
+  },
+  "dependencies": {
+    "@app/{{libName}}-shared": "$APP_VERSION",
+    "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
+    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
+    "@nu-art/firebase": "$THUNDERSTORM_SDK_VERSION"
+  },
+  "devDependencies": {
+    "@types/chai": "$CHAI_TYPES_VERSION",
+    "@types/mocha": "$MOCHA_TYPES_VERSION"
+  },
+  "private": {{isPrivate}},
+  "bai": {
+    "label": "{{libName}} Backend",
+    "pathToConfig": "./config.ts",
+    "customTSConfig": false
+  }
+}

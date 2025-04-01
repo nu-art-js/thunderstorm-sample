@@ -4,6 +4,9 @@
   "private": true,
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
+  "scripts": {
+    "plop": "plop --plopfile .plop-templates/plopfile.js"
+  },
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
@@ -28,7 +31,8 @@
     "typedoc": "^0.23.28",
     "typescript": "$TYPESCRIPT_PKG_VERSION",
     "use-strict": "^1.0.1",
-    "tsc-watch": "^6.0.0"
+    "tsc-watch": "^6.0.0",
+    "plop": "^4.0.1"
   },
   "engines": {
     "node": "22"

@@ -1,0 +1,26 @@
+import {DBDef_V3, tsValidateNumber, tsValidateString} from '@nu-art/ts-common';
+import {DBProto_{{entityName}},} from './types';
+
+const Validator_ModifiableProps: DBProto_{{entityName}}['modifiablePropsValidator'] = {
+	firstName: tsValidateString(),
+	lastName: tsValidateString(),
+	age: tsValidateNumber()
+};
+
+const Validator_GeneratedProps: DBProto_{{entityName}}['generatedPropsValidator'] = {};
+
+export const DBDef_{{entityName}}: DBDef_V3<DBProto_{{entityName}}> = {
+	modifiablePropsValidator: Validator_ModifiableProps,
+	generatedPropsValidator: Validator_GeneratedProps,
+	generatedProps: [],
+	versions: ['1.0.0'],
+	dbKey: 'person',
+	entityName: '{{entityName}}',
+	frontend: {
+		group: 'app-db',
+		name: '{{packageName}}'
+	},
+	backend: {
+		name: '{{packageName}}'
+	}
+};

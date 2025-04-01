@@ -1,0 +1,34 @@
+{
+  "name": "@app/{{libName}}-frontend",
+  "version": "$APP_VERSION",
+  "description": "{{libName}} Frontend",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "directory": "{{outputDir}}",
+    "linkDirectory": true
+  },
+  "dependencies": {
+    "@app/{{libName}}-shared": "$APP_VERSION",
+    "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
+    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
+    "react": "$REACT_PKG_VERSION",
+    "react-dom": "$REACT_DOM_PKG_VERSION"
+  },
+  "devDependencies": {
+    "@types/react": "$REACT_TYPES_VERSION",
+    "@types/react-dom": "$REACT_DOM_TYPES_VERSION",
+    "@types/chai": "$CHAI_TYPES_VERSION",
+    "@types/mocha": "$MOCHA_TYPES_VERSION"
+  },
+  "private": {{isPrivate}},
+  "bai": {
+    "label": "{{libName}} Frontend",
+    "pathToConfig": "./config.ts",
+    "customTSConfig": false
+  }
+}
