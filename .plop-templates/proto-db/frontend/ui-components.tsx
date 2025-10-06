@@ -1,4 +1,4 @@
-import {GenericDropDownV3, TemplatingProps_TS_GenericDropDown, TS_MultiSelect_V2} from '@nu-art/thunderstorm/frontend';
+import {GenericDropDownV3, TemplatingProps_TS_GenericDropDown, TS_MultiSelect_V2} from '@nu-art/thunderstorm/frontend/index';
 import * as React from 'react';
 import {ModuleFE_Person} from './ModuleFE_{{entityName}}.ts.hbs';
 import {

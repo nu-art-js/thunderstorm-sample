@@ -15,5 +15,5 @@ src/main/config.ts
 src/sw/index.js
 imports-*.svg
 !tsconfig.json
-
+src/main/**/*.d.ts
 .eslintrc.js

@@ -1,2 +1,2 @@
-export * from './ModuleBE_PersonDB';
-export * from './module-pack';
+export * from './ModuleBE_PersonDB.js';
+export * from './module-pack.js';

@@ -3,8 +3,6 @@
   "version": "$APP_VERSION",
   "description": "Core FE",
   "license": "Apache-2.0",
-  "main": "index.js",
-  "types": "index.d.ts",
   "scripts": {
     "build": "tsc"
   },
@@ -13,8 +11,8 @@
     "linkDirectory": true
   },
   "dependencies": {
-    "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
+    "@nu-art/thunderstorm": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/ts-common": "$THUNDERSTORM_DEP_VERSION",
     "@app/core-shared": "$APP_VERSION",
     "react": "$REACT_PKG_VERSION",
     "react-dom": "$REACT_DOM_PKG_VERSION",
@@ -28,5 +26,19 @@
     "@types/react-router-dom": "$REACT_ROUTER_DOM_TYPES_VERSION",
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1"
+  },
+  "unitConfig": {
+    "type": "typescript-lib"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./*": {
+      "types": "./*.d.ts",
+      "import": "./*.js"
+    }
   }
 }

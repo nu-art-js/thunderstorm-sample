@@ -16,7 +16,6 @@
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
     "sourceMap": true,
-    "strict": true,
-    "sourceRoot": "/Users/tacb0ss/dev/nu-art/tunderstorm-template/app/backend/src/main"
+    "strict": true
   }
 }

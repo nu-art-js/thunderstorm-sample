@@ -1,10 +1,7 @@
-import {GenericDropDownV3, TemplatingProps_TS_GenericDropDown, TS_MultiSelect_V2} from '@nu-art/thunderstorm/frontend';
-import * as React from 'react';
-import {ModuleFE_Person} from './ModuleFE_Person';
-import {
-	DBItemDropDownMultiSelector
-} from '@nu-art/thunderstorm/frontend/components/_TS_MultiSelect/DBItemDropDownMultiSelector';
-import {DBProto_Person} from '@app/core-shared/_entity/person';
+import {GenericDropDownV3, TemplatingProps_TS_GenericDropDown, TS_MultiSelect_V2} from '@nu-art/thunderstorm/frontend/index';
+import {ModuleFE_Person} from './ModuleFE_Person.js';
+import {DBItemDropDownMultiSelector} from '@nu-art/thunderstorm/frontend/components/_TS_MultiSelect/DBItemDropDownMultiSelector';
+import {DBProto_Person} from '@app/core-shared/_entity/person/index';
 
 
 const Props_DropDown: TemplatingProps_TS_GenericDropDown<DBProto_Person> = {

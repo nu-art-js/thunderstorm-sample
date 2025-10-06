@@ -1,5 +1,4 @@
-import {ComponentSync} from '@nu-art/thunderstorm/frontend';
-import * as React from 'react';
+import {ComponentSync} from '@nu-art/thunderstorm/frontend/index';
 import './TestComponent.scss';
 
 type Props_TestComponent = {

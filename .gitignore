@@ -28,3 +28,6 @@ auto-print-poc
 **/.DS_Store
 neural
 *.log
+tsconfig.json
+running-status.json
+.cache

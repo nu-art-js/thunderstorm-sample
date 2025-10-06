@@ -17,8 +17,6 @@
   },
   "license": "Apache-2.0",
   "author": "TacB0sS",
-  "main": "./dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "serve-old": "cd .. && bash ./build-and-install.sh -lb -nb -up=app-backend",
@@ -32,16 +30,16 @@
     "https": "^1.0.0",
     "net": "^1.0.2",
     "url": "^0.11.0",
-    "@nu-art/ts-openai": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-focused-object": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/firebase": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/google-services": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/permissions": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/slack": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-styles": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/user-account": "$THUNDERSTORM_SDK_VERSION",
+    "@nu-art/ts-openai": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/ts-focused-object": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/firebase": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/google-services": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/permissions": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/slack": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/thunderstorm": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/ts-common": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/ts-styles": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/user-account": "$THUNDERSTORM_DEP_VERSION",
     "@app/core-shared": "$APP_VERSION",
     "@app/core-backend": "$APP_VERSION",
     "@slack/web-api": "^5.8.1",
@@ -64,6 +62,35 @@
     "firebase-functions-test": "^0.2.3"
   },
   "engines": {
-    "node": "18"
-  }
+    "node": "22"
+  },
+  "unitConfig": {
+    "debugPort": 8001,
+    "basePort": 8002,
+    "type": "firebase-function",
+    "label": "TS - Backend",
+    "sslKey": "../../.config/.ssl/server-key.pem",
+    "sslCert": "../../.config/.ssl/server-cert.pem",
+    "envs": {
+      "local": {
+        "projectId": "thunderstorm-dev"
+      },
+      "prod": {
+        "projectId": "thunderstorm"
+      }
+    }
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./*": {
+      "types": "./*.d.ts",
+      "import": "./*.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts"
 }

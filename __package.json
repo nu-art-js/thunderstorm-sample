@@ -8,6 +8,7 @@
     "plop": "plop --plopfile .plop-templates/plopfile.js"
   },
   "devDependencies": {
+    "tsx": "^4.20.5",
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
     "@types/mocha": "^10.0.1",
@@ -15,26 +16,42 @@
     "@types/estree": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "$ES_LINT_PLUGIN_VERSION",
     "@typescript-eslint/parser": "$ES_LINT_PLUGIN_VERSION",
-    "@nu-art/build-and-install": "*",
-    "@nu-art/commando": "*",
-    "@nu-art/ts-common": "*",
+    "@nu-art/build-and-install": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/commando": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/ts-common": "$THUNDERSTORM_DEP_VERSION",
     "@types/express": "$EXPRESS_TYPES_VERSION",
     "firebase": "$FIREBASE_PKG_VERSION",
     "firebase-admin": "$FIREBASE_ADMIN_PKG_VERSION",
     "firebase-functions": "$FIREBASE_FUNCTIONS_PKG_VERSION",
+    "google-auth-library": "$GOOGLE_AUTHLIB_VERSION",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "eslint": "$ES_LINT_VERSION",
     "mocha": "^10.2.0",
     "ts-mocha": "^10.0.0",
-    "ts-node": "^10.9.1",
     "typedoc": "^0.23.28",
     "typescript": "$TYPESCRIPT_PKG_VERSION",
     "use-strict": "^1.0.1",
     "tsc-watch": "^6.0.0",
-    "plop": "^4.0.1"
+    "plop": "^4.0.1",
+    "node-plop": "^0.32.0",
+    "inquirer": "^12.5.2",
+    "undici-types": "^7.8.0",
+    "firebase-tools": "$FIREBASE_TOOLS_PKG_VERSION",
+    "ts-node": "latest",
+    "google-gax": "5.0.1"
   },
   "engines": {
     "node": "22"
+  },
+  "pnpm": {
+    "overrides": {
+      "google-auth-library": "10.3.0",
+      "@bcherny/json-schema-ref-parser": "npm:@apidevtools/json-schema-ref-parser@^14.2.0"
+    }
+  },
+  "type": "module",
+  "unitConfig": {
+    "type": "node-project"
   }
 }

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import {ModuleFE_Window, Thunder} from '@nu-art/thunderstorm/frontend';
+import {ModuleFE_Window, Thunder} from '@nu-art/thunderstorm/frontend/index';
 import {App} from './App';
 
 

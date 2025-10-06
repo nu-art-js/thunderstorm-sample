@@ -1,7 +1,6 @@
-import * as React from 'react';
-import {AppPageV2, LL_V_L, ModuleFE_RoutingV2, TS_Button} from '@nu-art/thunderstorm/frontend';
+import {AppPageV2, LL_V_L, ModuleFE_RoutingV2, TS_Button} from '@nu-art/thunderstorm/frontend/index';
 import './Page_Landing.scss';
-import {Route_DevPage} from '../Page_Dev/route';
+import {Route_DevPage} from '../Page_Dev/route.js';
 
 export class Page_Landing
 	extends AppPageV2 {

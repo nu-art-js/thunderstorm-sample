@@ -3,8 +3,6 @@
   "version": "$APP_VERSION",
   "description": "Core BE",
   "license": "Apache-2.0",
-  "main": "index.js",
-  "types": "index.d.ts",
   "scripts": {
     "build": "tsc"
   },
@@ -14,13 +12,29 @@
   },
   "dependencies": {
     "@app/core-shared": "$APP_VERSION",
-    "@nu-art/thunderstorm": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/ts-common": "$THUNDERSTORM_SDK_VERSION",
-    "@nu-art/firebase": "$THUNDERSTORM_SDK_VERSION",
+    "@nu-art/thunderstorm": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/ts-common": "$THUNDERSTORM_DEP_VERSION",
+    "@nu-art/firebase": "$THUNDERSTORM_DEP_VERSION",
     "moment": "^2.29.4"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1"
-  }
+  },
+  "unitConfig": {
+    "type": "typescript-lib"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./*": {
+      "types": "./*.d.ts",
+      "import": "./*.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts"
 }

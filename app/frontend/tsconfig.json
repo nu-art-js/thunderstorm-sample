@@ -1,27 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "module": "NodeNext",
     "baseUrl": "./",
     "outDir": "../../build",
     "rootDir": ".",
-    "jsx": "react",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "jsx": "react-jsx",
+    "allowJs": true,
     "lib": [
-      "es2015",
-      "es5",
-      "es6",
-      "es7",
-      "dom"
+      "ES2022",
+      "DOM"
     ],
     "declaration": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
-    "module": "commonjs",
     "sourceMap": true,
     "strict": true,
-  },
-  "esModuleInterop": true,
-  "module": "ES2020"
+    "allowImportingTsExtensions": true
+  }
 }

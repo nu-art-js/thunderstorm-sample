@@ -17,7 +17,7 @@
  */
 
 import * as React from 'react';
-import {BaseAsyncState, ComponentAsync, LL_V_L, SimpleListAdapter, stopPropagation, Thunder, TS_DropDown,} from '@nu-art/thunderstorm/frontend';
+import {BaseAsyncState, ComponentAsync, LL_V_L, SimpleListAdapter, stopPropagation, Thunder, TS_DropDown,} from '@nu-art/thunderstorm/frontend/index';
 import './Options.scss';
 import {StorageKey_Name, StorageKey_Title} from '../shared/consts';
 

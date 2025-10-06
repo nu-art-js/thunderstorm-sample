@@ -17,7 +17,7 @@
  */
 
 import * as React from 'react';
-import {ComponentAsync, stopPropagation, Thunder, TS_Button,} from '@nu-art/thunderstorm/frontend';
+import {ComponentAsync, stopPropagation, Thunder, TS_Button,} from '@nu-art/thunderstorm/frontend/index';
 import './App.scss';
 import {StorageKey_Name, StorageKey_Title} from '../shared/consts';
 import {scriptTest1} from './script/test-1';

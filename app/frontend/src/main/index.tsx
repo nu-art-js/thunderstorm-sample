@@ -15,10 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {ModulePackFE_Thunderstorm, Thunder} from '@nu-art/thunderstorm/frontend';
+import {ModulePackFE_Thunderstorm, Thunder} from '@nu-art/thunderstorm/frontend/index';
 import {ThunderstormDefaultApp} from '@nu-art/thunderstorm/frontend/core/ThunderstormDefaultApp';
-import {Route_Page_Main} from './ui/pages/Page_Main/route';
-import {ModuleFE_App} from './modules/ModuleFE_App';
+import {Route_Page_Main} from './ui/pages/Page_Main/route.js';
+import {ModuleFE_App} from './modules/ModuleFE_App.js';
 import './App.scss';
 
 // ModuleFE_LocalStorage.setPersistentDebugState();
@@ -26,10 +26,9 @@ const modules = [
 	ModuleFE_App,
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const config = require('./config').config;
-new Thunder()
-	.setConfig(config)
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const config = require('./config.js').config;
+new Thunder(config)
 	.addModulePack(ModulePackFE_Thunderstorm)
 	.addModulePack(modules)
 	.setMainApp(ThunderstormDefaultApp, {rootRoute: Route_Page_Main})

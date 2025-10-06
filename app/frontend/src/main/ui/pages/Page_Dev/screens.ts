@@ -1,3 +1,3 @@
-import {AppToolsScreen} from '@nu-art/thunderstorm/frontend';
+import {AppToolsScreen} from '@nu-art/thunderstorm/frontend/index';
 
 export const Page_Dev_Screens: AppToolsScreen[] = [];

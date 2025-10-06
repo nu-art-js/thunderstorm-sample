@@ -1,41 +1,52 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import * as path from 'path';
-import * as webpack from 'webpack';
-import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+import type * as webpack from 'webpack';
+import pkg from 'webpack';
+import * as path from 'node:path';
+import {dirname} from 'node:path';
+import {createRequire} from 'node:module';
+
 import 'webpack-dev-server';
-import {WebPackEnvConfig, WebPackEnvs} from './_webpack/types';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+import HtmlWebPackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
 
-//Plugins
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {WebpackManifestPlugin} = require('webpack-manifest-plugin');
+import {WebPackEnvConfig, WebPackEnvs} from './_webpack/types.ts';
+import {fileURLToPath} from 'node:url';
 
-//Consts
+const {DefinePlugin} = pkg;
+
+// ESM-safe replacements for __filename/__dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
+// ────────────────────────────────────────────────────────────────────────────────
+// ESM-safe access to package.json
+// (works even with "type":"module" in your repo)
+const require = createRequire(import.meta.url);
 const packageJson = require('./package.json');
-// const swChunkName = 'pubsub-sw';
-const outputFolder = path.resolve(__dirname, `dist`);
+
+// ────────────────────────────────────────────────────────────────────────────────
+// Paths
+const outputFolder = path.resolve(__dirname, 'dist');
 const sourcePath = path.join(__dirname, './src');
-// const swFolder = path.join(__dirname, './src/sw/');
 const mainFolder = path.join(__dirname, './src/main/');
 const mainConfig = path.join(__dirname, './src/main/tsconfig.json');
 
-type ConfigParams = {
-	app: {
-		env: WebPackEnvs
-	}
-}
+// ────────────────────────────────────────────────────────────────────────────────
+type ConfigParams = { app: { env: WebPackEnvs } };
 
-const webPackConfig = (params: ConfigParams): webpack.Configuration => {
+const webPackConfig = async (params: ConfigParams): Promise<webpack.Configuration> => {
 	const env = params.app.env;
-	const config = require(`./_webpack/webpack-config-${env}`) as WebPackEnvConfig;
+	const {default: config} = await import(`./_webpack/webpack-config-${env}.ts`) as { default: WebPackEnvConfig };
 
-	const devServer = {
+	const devServer: NonNullable<webpack.Configuration['devServer']> = {
 		historyApiFallback: true,
 		compress: true,
 		static: outputFolder,
 		server: {type: 'https', options: config.devServerSSL},
 		port: config.hostingPort,
-		hot: true
+		hot: true,
 	};
 
 	const wpConfig: webpack.Configuration = {
@@ -43,7 +54,7 @@ const webPackConfig = (params: ConfigParams): webpack.Configuration => {
 		target: ['web'],
 		entry: {
 			main: './main/index.tsx',
-			// [swChunkName]: './sw/index.ts',
+			// sw: './sw/index.ts',
 		},
 
 		output: {
@@ -58,21 +69,37 @@ const webPackConfig = (params: ConfigParams): webpack.Configuration => {
 			splitChunks: {
 				cacheGroups: {
 					defaultVendors: {
-						chunks(chunk) {
-							// return chunk.name !== swChunkName;
+						chunks() {
+							// return chunk.name !== 'sw';
 							return true;
 						},
-						test: /.\/node_modules[\\/]/,
+						// FIX: proper node_modules regex
+						test: /[\\/]node_modules[\\/]/,
 						name: 'vendors',
-					}
-				}
+					},
+				},
 			},
 		},
 
 		devtool: 'source-map',
 
+		cache: {type: 'filesystem'},
+		infrastructureLogging: {level: 'warn'},
+		stats: 'errors-warnings',
+
 		resolve: {
 			...config.resolve,
+
+			// CRUCIAL for “.js in TS imports” to resolve your .ts/.tsx sources
+			extensionAlias: {
+				'.js': ['.ts', '.tsx', '.js'],
+				'.mjs': ['.mts', '.mjs'],
+				'.cjs': ['.cts', '.cjs'],
+			},
+
+			// Optional: relax ESM “fully specified” requirement for bare imports
+			fullySpecified: false,
+
 			fallback: {
 				fs: false,
 				tls: false,
@@ -85,9 +112,21 @@ const webPackConfig = (params: ConfigParams): webpack.Configuration => {
 				https: false,
 				stream: require.resolve('stream-browserify'),
 				crypto: require.resolve('crypto-browserify'),
-				vm: require.resolve('vm-browserify')
+				vm: require.resolve('vm-browserify'),
 			},
-			extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.scss']
+			alias: {
+				'@modules': path.resolve(__dirname, 'src/main/modules'),
+				'@styles': path.resolve(__dirname, 'src/main/res/styles'),
+				'@res': path.resolve(__dirname, 'src/main/res'),
+				'@consts': path.resolve(__dirname, 'src/main/app/consts'),
+				'@pah': path.resolve(__dirname, 'src/main/app/pah'),
+				'@form': path.resolve(__dirname, 'src/main/app/form'),
+				'@page': path.resolve(__dirname, 'src/main/app/pages'),
+				'@component': path.resolve(__dirname, 'src/main/app/components'),
+				'@dialog': path.resolve(__dirname, 'src/main/app/dialogs'),
+				'@renderer': path.resolve(__dirname, 'src/main/app/renderers'),
+			},
+			extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.scss'],
 		},
 
 		module: {
@@ -98,81 +137,73 @@ const webPackConfig = (params: ConfigParams): webpack.Configuration => {
 					use: {
 						loader: 'ts-loader',
 						options: {
-							configFile: mainConfig
-						}
-					}
+							configFile: mainConfig,
+						},
+					},
 				},
-				// {
-				// 	test: /sw\/index.ts$/,
-				// 	include: [swFolder],
-				// 	loader: 'ts-loader',
-				// },
 				{
 					loader: 'source-map-loader',
 					enforce: 'pre',
 					test: /\.js$/,
-					exclude: [/node_modules/, /dist/, /build/, /__test__/]
+					exclude: [/node_modules/, /dist/, /build/, /__test__/],
 				},
+
+				// Use Webpack 5 asset modules instead of url-loader/file-loader for fonts & images
 				{
-					test: /\.[ot]tf$/,
-					use: [
-						{
-							loader: 'url-loader',
-							options: {
-								limit: 10000,
-								mimetype: 'application/octet-stream',
-								name: 'fonts/[name].[ext]',
-							}
-						}
-					]
-				},
-				{
-					test: /\.json$/,
-					exclude: /node_modules/,
-				},
-				{
-					test: /\.[ot]tf$/,
+					test: /\.[ot]tf$/i,
 					type: 'asset/resource',
+					generator: {filename: 'fonts/[name][ext]'},
 				},
 				{
 					test: /\.(jpe?g|png|gif|ico)$/i,
-					type: 'asset/resource'
+					type: 'asset/resource',
 				},
+
+				// SVG as React component when imported from TS/TSX
 				{
-					test: /\.svg$/,
+					test: /\.svg$/i,
+					// ensure .svg from your lib’s dist are transformed too
 					issuer: /\.[jt]sx?$/,
-					use: [{
-						loader: '@svgr/webpack',
-						options: {
-							typescript: true,
-						}
-					}, 'url-loader']
-				},
-				{
-					test: /\.s?[c|a]ss$/,
 					use: [
-						'style-loader',
-						MiniCssExtractPlugin.loader,
-						// Translates CSS into CommonJS
-						'css-loader',
-						// Compiles Sass to CSS
-						'sass-loader',
-					]
+						{
+							loader: '@svgr/webpack',
+							options: {
+								typescript: true,
+								exportType: 'named',
+								namedExport: 'ReactComponent',
+								icon: true, // optional, removes width/height for easier styling
+							},
+						},
+					],
 				},
-			]
+
+				// SCSS / CSS
+				{
+					test: /\.s?[ac]ss$/,
+					use: [
+						// In dev you might prefer 'style-loader'; MiniCssExtract is fine universally
+						MiniCssExtractPlugin.loader,
+						'css-loader',
+						'sass-loader',
+					],
+				},
+			],
 		},
 
 		plugins: [
-			new webpack.DefinePlugin({
+			new DefinePlugin({
+				// keep original env shape for existing code
 				'process.env': {
-					'appEnv': `"${env}"`,
-					'appVersion': `"${packageJson.version}"`
+					appEnv: `"${env}"`,
+					appVersion: `"${packageJson.version}"`,
 				},
-				'process.browser': JSON.stringify(true)
+				// also expose standard key for libraries
+				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+				'process.browser': JSON.stringify(true),
 			}),
+			// output.clean already cleans; keeping CleanWebpackPlugin is harmless but redundant
 			new CleanWebpackPlugin({cleanStaleWebpackAssets: false}),
 			new MiniCssExtractPlugin({
-				// filename: 'main/res/styles.[contenthash].css',
 				filename: 'main/res/styles.[name].css',
 			}),
 			new HtmlWebPackPlugin({
@@ -181,13 +212,13 @@ const webPackConfig = (params: ConfigParams): webpack.Configuration => {
 				template: './main/index.ejs',
 				filename: './index.html',
 				minify: config.htmlMinificationOptions,
-				// excludeChunks: [swChunkName]
+				// excludeChunks: ['sw']
 			}),
-			new WebpackManifestPlugin()
-		].filter(plugin => plugin),
+			new WebpackManifestPlugin({}),
+		].filter(Boolean),
 	};
 
-	//@ts-ignore
+	// @ts-ignore
 	wpConfig.devServer = devServer;
 
 	return wpConfig;

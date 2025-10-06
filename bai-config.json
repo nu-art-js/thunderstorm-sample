@@ -1,0 +1,79 @@
+{
+  "templateParams": {
+    "packageJson": {
+      "GOOGLE_CLOUD_COMMON": "^5.0.2",
+      "GOOGLE_CLOUD_STORAGE": "^7.15.0",
+      "GOOGLE_CLOUD_FIRESTORE": "^7.11.0",
+      "MOMENT_PKG_VERSION": "^2.29.4",
+      "FIREBASE_PKG_VERSION": "^11.9.0",
+      "FIREBASE_ADMIN_PKG_VERSION": "13.4.0",
+      "FIREBASE_FUNCTIONS_PKG_VERSION": "6.3.2",
+      "REACT_PKG_VERSION": "^18.0.0",
+      "REACT_DOM_PKG_VERSION": "^18.0.0",
+      "REACT_ROUTER_DOM_PKG_VERSION": "^6.9.0",
+      "REACT_TYPES_VERSION": "^18.0.0",
+      "REACT_DOM_TYPES_VERSION": "^18.0.0",
+      "REACT_ROUTER_TYPES_VERSION": "^5.1.20",
+      "REACT_ROUTER_DOM_TYPES_VERSION": "^5.3.3",
+      "CHAI_TYPES_VERSION": "^4.3.4",
+      "MOCHA_TYPES_VERSION": "^10.0.1",
+      "QS_TYPES_VERSION": "^6.5.2",
+      "NODE_TYPES_VERSION": "^22.0.0",
+      "EXPRESS_PKG_VERSION": "^4.18.2",
+      "EXPRESS_TYPES_VERSION": "^4.17.17",
+      "TYPESCRIPT_PKG_VERSION": "latest",
+      "FIREBASE_TOOLS_PKG_VERSION": "latest",
+      "SHOPIFY_PKG_VERSION": "^3.12.4",
+      "DTHREE_PKG_VERSION": "^7.9.0",
+      "ANTLR_PKG_VERSION": "0.5.0-alpha.4",
+      "LINT_MAIN_COMMAND": "lint",
+      "REACT_DATE_PICKER_PKG_VERSION": "^6.0.0",
+      "REACT_KONVA_PKG_VERSION": "^18.0.0",
+      "REACT_DATE_PICKER_TYPES_VERSION": "^6.0.0",
+      "GOOGLE_SPREADSHEET_TYPE_VERSION": "^4.0.0",
+      "GOOGLE_SPREADSHEET_PKG_VERSION": "^5.0.0",
+      "GOOGLE_TRANSLATE_PKG_VERSION": "^8.2.0",
+      "WEBPACK_PKG_VERSION": "5.95.0",
+      "SASS_LOADER_PKG_VERSION": "16.0.2",
+      "ES_LINT_VERSION": "9.18.0",
+      "ES_LINT_PLUGIN_VERSION": "8.19.1",
+      "D3_VERSION": "7.8.2",
+      "D3_GRAPHVIZ_VERSION": "5.0.2",
+      "D3_SELECTION_VERSION": "3.0.0",
+      "TS_GRAPHVIZ_VERSION": "1.5.3",
+      "JOSE_PKG_VERSION": "^5.0.0",
+      "THUNDERSTORM_VERSION": "0.400.0",
+      "THUNDERSTORM_DEP_VERSION": "workspace:*",
+      "APP_DEP_VERSION": "workspace:*",
+      "APP_VERSION": "1.0.0",
+      "GOOGLE_PUBSUB_VERSION": "^4.0.0",
+      "GOOGLE_SECRET_MANAGER_VERSION": "^6.1.0",
+      "GOOGLE_AUTHLIB_VERSION": "^10.0.0",
+      "GOOGLE_APIS_VERSION": "^152.0.0"
+    }
+  },
+  "files": {
+    "tests": {
+      "firebase": {
+        "firebase.json": "./.config/tests/firebase/firebase.json",
+        ".firebaserc": "./.config/tests/firebase/.firebaserc"
+      }
+    },
+    "firebase": {
+      "databaseRules": "./.config/.firebase-config/database.rules.json",
+      "storageRules": "./.config/.firebase-config/storage.rules",
+      "firestoreIndexesRules": "./.config/.firebase-config/firestore.indexes.json",
+      "firestoreRules": "./.config/.firebase-config/firestore.rules"
+    },
+    "typescript": {
+      "tsConfig": {
+        "main": "./.config/tsconfig-main.json",
+        "test": "./.config/tsconfig-main.json",
+        "sw": "./.config/tsconfig-sw.json"
+      }
+    },
+    "backend": {
+      "proxy": "./.config/backend/proxy._ts"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import express from 'express';
 import request from 'request';
 import * as fs from 'fs';
+import {createServer} from 'node:https';
 
 
 const _express: express.Express = express();
@@ -10,16 +11,15 @@ _express.all('*', (req, res) => {
 	const qMark = req.originalUrl.indexOf('?');
 	const query = qMark > 1 ? req.originalUrl.substring(qMark) : '';
 	const path = req.path;
-	let url = `http://127.0.0.1:8123/shopify-manager-tool-dev/us-central1/api${path}${query}`;
-	if (path.startsWith('/emulatorDownload') || path.startsWith('/emulatorUpload'))
-		url = `http://127.0.0.1:8123/shopify-manager-tool-dev/us-central1${path}${query}`;
-
+	let url = `http://127.0.0.1:{{SERVER_PORT}}/{{PROJECT_ID}}/us-central1/api${path}${query}`;
 	console.log(`PROXY ${counter} - [${req.method}] ${url}`);
 
 	const handleError = (error: any) => {
-	    if(!error)
-	        return;
+		if (!error)
+			return;
+
 		console.log(`ERROR calling: ${url}`, error);
+		res.status(503).end();
 	};
 
 	try {
@@ -42,13 +42,13 @@ _express.all('*', (req, res) => {
 		console.log(`PROXY ${counter} - END`);
 	} catch (e) {
 		console.log(`ERROR calling: ${url}`, e);
-		res.end(500);
+		res.status(500).end();
 	}
 });
 
 const ssl = {
-	key: '/Users/tacb0ss/dev/nu-art/shopify-web-tool/.config/.ssl/server-key.pem',
-	cert: '/Users/tacb0ss/dev/nu-art/shopify-web-tool/.config/.ssl/server-cert.pem'
+	key: '{{PATH_TO_SSL_KEY}}',
+	cert: '{{PATH_TO_SSL_CERTIFICATE}}'
 };
 
 let key = ssl.key;
@@ -66,5 +66,5 @@ const options = {
 	requestCert: false,
 };
 
-require('https').createServer(options, _express).listen(8122);
-console.log('SSL proxy started!!!');
+createServer(options, _express).listen(+'{{PROXY_PORT}}');
+console.log(`SSL proxy started at port: {{PROXY_PORT}}`);

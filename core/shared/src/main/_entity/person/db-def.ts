@@ -1,5 +1,5 @@
 import {DBDef_V3, tsValidateNumber, tsValidateString} from '@nu-art/ts-common';
-import {DBProto_Person,} from './types';
+import {DBProto_Person,} from './types.js';
 
 const Validator_ModifiableProps: DBProto_Person['modifiablePropsValidator'] = {
 	firstName: tsValidateString(),

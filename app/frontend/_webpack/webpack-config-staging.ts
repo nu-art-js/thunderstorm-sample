@@ -1,12 +1,12 @@
-import {resolveGTMScript} from './utils';
-import {WebPackEnvConfig} from './types';
+import {resolveGTMScript} from './utils.ts';
+import {WebPackEnvConfig} from './types.ts';
 
 
-const webPackConfig_Stg: WebPackEnvConfig = {
+const config: WebPackEnvConfig = {
 	jsxMinify: false,
 	cssMinify: false,
 	outputFolder: 'stg',
 	gtmScript: resolveGTMScript('GTM-STG'),
 };
 
-module.exports = {...webPackConfig_Stg};
+export default config;

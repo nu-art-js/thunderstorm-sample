@@ -1,8 +1,8 @@
-import {fullHTMLMinification, resolveGTMScript} from './utils';
-import {WebPackEnvConfig} from './types';
+import {fullHTMLMinification, resolveGTMScript} from './utils.ts';
+import {WebPackEnvConfig} from './types.ts';
 
 
-const webPackConfig_Prod: WebPackEnvConfig = {
+const config: WebPackEnvConfig = {
 	jsxMinify: false,
 	cssMinify: false,
 	outputFolder: 'prod',
@@ -10,4 +10,4 @@ const webPackConfig_Prod: WebPackEnvConfig = {
 	htmlMinificationOptions: fullHTMLMinification,
 };
 
-module.exports = {...webPackConfig_Prod};
+export default config

@@ -1,2 +1,2 @@
-export * from './db-def'
-export * from './types'
+export * from './db-def.js';
+export * from './types.js';

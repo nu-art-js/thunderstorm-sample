@@ -1,13 +1,12 @@
-import * as fs from 'fs';
-import {resolveGTMScript} from './utils';
-import {WebPackEnvConfig} from './types';
+import {resolveGTMScript} from './utils.ts';
+import {WebPackEnvConfig} from './types.ts';
 
 
-const webPackConfig_Dev: WebPackEnvConfig = {
+const config: WebPackEnvConfig = {
 	jsxMinify: false,
 	cssMinify: false,
 	outputFolder: 'dev',
 	gtmScript: resolveGTMScript('GTM-DEV'),
 };
 
-module.exports = {...webPackConfig_Dev};
+export default config;

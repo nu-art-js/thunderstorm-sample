@@ -1,11 +1,7 @@
 import {ProjectConfigV2} from '@nu-art/build-and-install/v2/project/types';
 import * as fs from 'fs';
 import {BadImplementationException, lastElement} from '@nu-art/ts-common';
-import {
-	App,
-	Unit_Core,
-	Unit_Root,
-} from './units/units';
+import {App, Unit_Core, Unit_Root,} from './units/units';
 import {MemKey_PhaseRunner} from '@nu-art/build-and-install/v2/phase-runner/consts';
 import {
 	phase_Compile,
@@ -22,7 +18,6 @@ import {MemKey_BAIScreenManager} from '@nu-art/build-and-install/v2/screens/BAIS
 import {BAIScreen_UnitList} from '@nu-art/build-and-install/v2/screens/BAIScreen_UnitList';
 import {BAIScreen_Launch} from '@nu-art/build-and-install/v2/screens/BAIScreen_Launch';
 import {convertToFullPath} from '@nu-art/commando/shell/tools';
-import {Unit_Firebase} from '@nu-art/build-and-install/v2/unit/thunderstorm';
 
 
 export default async () => {
@@ -59,8 +54,6 @@ export default async () => {
 		stopOnPhase: RuntimeParams.launch ? lastElement(phases) : phase_Launch,
 		condition: () => !RuntimeParams.allLogs
 	});
-	// @ts-ignore
-	Unit_Firebase.config = {...Unit_Firebase.config, customTSConfig: true};
 	const units = [
 		Unit_Root,
 		Unit_Core.shared,
@@ -91,6 +84,8 @@ export default async () => {
 		projectVersion: require(pathToProjectVersion).version,
 		thunderstormVersion: require(pathToThunderstormVersion).version,
 		params: {
+			'THUNDERSTORM_VERSION': '0.300.8',
+			'THUNDERSTORM_DEP_VERSION': '0.300.8',
 			'GOOGLE_CLOUD_COMMON': '^5.0.2',
 			'GOOGLE_CLOUD_STORAGE': '^7.15.0',
 			'GOOGLE_CLOUD_FIRESTORE': '^7.11.0',
@@ -109,24 +104,37 @@ export default async () => {
 			'CHAI_TYPES_VERSION': '^4.3.4',
 			'MOCHA_TYPES_VERSION': '^10.0.1',
 
+			'D3_VERSION': '7.8.2',
+			'D3_GRAPHVIZ_VERSION': '5.0.2',
+			'D3_SELECTION_VERSION': '3.0.0',
+			'TS_GRAPHVIZ_VERSION': '1.5.3',
+
 			'QS_TYPES_VERSION': '^6.5.2',
 			'NODE_TYPES_VERSION': '^22.0.0',
 			'EXPRESS_PKG_VERSION': '^4.18.2',
 			'EXPRESS_TYPES_VERSION': '^4.17.17',
 			'EXPRESS_SERVE_STATIC_CORE_TYPES_VERSION': '^4.17.0',
 			'TYPESCRIPT_PKG_VERSION': 'latest',
+			'FIREBASE_TOOLS_PKG_VERSION': 'latest',
+			'JOSE_PKG_VERSION': '^5.0.0',
 			'ANTLR_PKG_VERSION': '0.5.0-alpha.4',
 			'LINT_MAIN_COMMAND': 'lint',
+			'SHOPIFY_PKG_VERSION': '^3.12.4',
 			'REACT_DATE_PICKER_PKG_VERSION': '^4.10.0',
 			'REACT_KONVA_PKG_VERSION': '^18.2.5',
 			'REACT_DATE_PICKER_TYPES_VERSION': '^4.10.0',
 			'GOOGLE_SPREADSHEET_TYPE_VERSION': '^4.0.0',
-			'GOOGLE_SPREADSHEET_PKG_VERSION': '^4.0.0',
+			'GOOGLE_SPREADSHEET_PKG_VERSION': '^5.0.0',
+			'DTHREE_PKG_VERSION': '^7.9.0',
 			'GOOGLE_TRANSLATE_PKG_VERSION': '^8.2.0',
 			'WEBPACK_PKG_VERSION': '5.95.0',
 			'SASS_LOADER_PKG_VERSION': '16.0.2',
 			'ES_LINT_VERSION': '9.18.0',
 			'ES_LINT_PLUGIN_VERSION': '8.19.1',
+			'GOOGLE_PUBSUB_VERSION': '^4.0.0',
+			'GOOGLE_SECRET_MANAGER_VERSION': '^6.1.0',
+			'GOOGLE_AUTHLIB_VERSION': '^9.0.0',
+			'GOOGLE_APIS_VERSION': '^152.0.0'
 		},
 		defaultFileRoutes: {
 			firebaseConfig: {
