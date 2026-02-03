@@ -50,7 +50,6 @@
       "@bcherny/json-schema-ref-parser": "npm:@apidevtools/json-schema-ref-parser@^14.2.0"
     }
   },
-  "type": "module",
   "unitConfig": {
     "type": "node-project"
   }
