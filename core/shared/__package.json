@@ -11,7 +11,7 @@
     "linkDirectory": true
   },
   "dependencies": {
-    "@nu-art/ts-common": "$THUNDERSTORM_DEP_VERSION"
+    "@nu-art/ts-common": "?"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",

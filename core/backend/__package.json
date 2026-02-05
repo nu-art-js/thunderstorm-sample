@@ -11,10 +11,10 @@
     "linkDirectory": true
   },
   "dependencies": {
-    "@app/core-shared": "$APP_VERSION",
-    "@nu-art/thunderstorm": "$THUNDERSTORM_DEP_VERSION",
-    "@nu-art/ts-common": "$THUNDERSTORM_DEP_VERSION",
-    "@nu-art/firebase": "$THUNDERSTORM_DEP_VERSION",
+    "@app/core-shared": "?",
+    "@nu-art/thunderstorm-backend": "?",
+    "@nu-art/ts-common": "?",
+    "@nu-art/firebase-backend": "?",
     "moment": "^2.29.4"
   },
   "devDependencies": {
