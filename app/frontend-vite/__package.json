@@ -1,0 +1,59 @@
+{
+  "name": "@app/frontend-vite",
+  "version": "$APP_VERSION",
+  "description": "Frontend Vite app (Firebase Hosting)",
+  "keywords": [
+    "TacB0sS",
+    "frontend",
+    "vite",
+    "react",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:nu-art-js/thunderstorm-template.git"
+  },
+  "license": "Apache-2.0",
+  "author": "TacB0sS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "vite build",
+    "start": "vite"
+  },
+  "dependencies": {
+    "@nu-art/ts-common": "?",
+    "react": "?",
+    "react-dom": "?"
+  },
+  "devDependencies": {
+    "@types/react": "?",
+    "@types/react-dom": "?",
+    "@vitejs/plugin-react": "?",
+    "sass": "?",
+    "vite": "?",
+    "vite-plugin-node-polyfills": "?"
+  },
+  "unitConfig": {
+    "hasSelfHotReload": true,
+    "servingPort": 3000,
+    "type": "vite-hosting",
+    "label": "Frontend Vite",
+    "envs": {
+      "local": {
+        "config": {},
+        "projectId": "my-project-local"
+      }
+    }
+  },
+  "type": "module",
+  "publishConfig": {
+    "directory": "dist"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    }
+  }
+}

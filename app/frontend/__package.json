@@ -85,9 +85,9 @@
     "envs": {
       "local": {
         "config": {
-          "configUrl": "http://127.0.0.1:8124/_config/frontend/manager.json?ns=shopify-manager-tool-local-default-rtdb"
+          "configUrl": "http://127.0.0.1:8124/_config/frontend/manager.json?ns=my-project-local-default-rtdb"
         },
-        "projectId": "shopify-manager-tool-local"
+        "projectId": "my-project-local"
       }
     }
   },
