@@ -31,3 +31,4 @@ neural
 tsconfig.json
 running-status.json
 .cache
+.config/.ssl
