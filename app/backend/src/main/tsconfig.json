@@ -12,11 +12,10 @@
     "declaration": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
-    "sourceMap": true,
     "strict": true,
+    "sourceMap": true,
     "sourceRoot": "/Users/tacb0ss/dev/nu-art/tunderstorm-template/app/backend/src/main"
   }
 }

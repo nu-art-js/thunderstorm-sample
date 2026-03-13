@@ -1,4 +1,4 @@
-import {AppPageV2, LL_V_L, ModuleFE_RoutingV2, TS_Button} from '@nu-art/thunderstorm/frontend/index';
+import {AppPageV2, LL_V_L, ModuleFE_RoutingV2, TS_Button} from '@nu-art/thunderstorm-frontend';
 import './Page_Landing.scss';
 import {Route_DevPage} from '../Page_Dev/route.js';
 

@@ -1,5 +1,4 @@
-import {createApisForDBModuleV3} from '@nu-art/thunderstorm/backend/index';
+import {createApisForDBModule} from '@nu-art/db-api-backend';
 import {ModuleBE_PersonDB} from './ModuleBE_PersonDB.js';
 
-
-export const ModulePackBE_FAQDB = [ModuleBE_PersonDB, createApisForDBModuleV3(ModuleBE_PersonDB)];
+export const ModulePackBE_PersonDB = [ModuleBE_PersonDB, createApisForDBModule(ModuleBE_PersonDB)];

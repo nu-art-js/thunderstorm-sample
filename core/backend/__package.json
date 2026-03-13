@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "@app/core-shared": "?",
-    "@nu-art/thunderstorm-backend": "?",
-    "@nu-art/ts-common": "?",
+    "@nu-art/db-api-backend": "?",
+    "@nu-art/db-api-shared": "?",
     "@nu-art/firebase-backend": "?",
+    "@nu-art/ts-common": "?",
     "moment": "^2.29.4"
   },
   "devDependencies": {

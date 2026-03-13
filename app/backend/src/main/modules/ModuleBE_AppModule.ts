@@ -1,8 +1,6 @@
 import {Module} from '@nu-art/ts-common';
-import {CollectPermissionsProjects, PermissionProject_Permissions} from '@nu-art/permissions/backend/modules/ModuleBE_Permissions';
-import {DefaultDef_Project} from '@nu-art/permissions/shared/types';
-import {PermissionsPackage_Developer, PermissionsPackage_Permissions} from '@nu-art/permissions/backend/permissions';
-
+import {CollectPermissionsProjects, DefaultDef_Project, PermissionProject_Permissions, PermissionsPackage_Developer, PermissionsPackage_Permissions} from '@nu-art/permissions-backend';
+import {toPermissionProjectId} from '@nu-art/permissions-shared';
 
 const packages = [
 	PermissionsPackage_Permissions,
@@ -20,7 +18,7 @@ export class ModuleBE_AppModule_Class
 	__collectPermissionsProjects(): DefaultDef_Project {
 		return {
 			name: 'Petit Fawn',
-			_id: '62354f5e567be2d5bbe2ac6bc163ed2f',
+			_id: toPermissionProjectId('62354f5e567be2d5bbe2ac6bc163ed2f'),
 			packages: packages,
 			// PATCH: permissions domains unique ids should be project id and domain uid, which then will break the things
 			groups: [...PermissionProject_Permissions.groups!]

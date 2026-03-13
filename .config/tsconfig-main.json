@@ -12,11 +12,8 @@
     "declaration": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
-    "sourceMap": true,
-    "strict": true,
-    "sourceRoot": "{{SOURCE_ROOT}}"
+    "strict": true
   }
 }

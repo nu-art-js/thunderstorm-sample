@@ -1,10 +1,13 @@
-import {GenericDropDownV3, TemplatingProps_TS_GenericDropDown, TS_MultiSelect_V2} from '@nu-art/thunderstorm/frontend/index';
+import {
+	DBItemDropDownMultiSelector,
+	prepareGenericDropDown,
+	TemplatingProps_TS_GenericDropDown,
+	TS_MultiSelect_V2
+} from '@nu-art/editable-item';
+import {DatabaseDef_Person} from '@app/core-shared';
 import {ModuleFE_Person} from './ModuleFE_Person.js';
-import {DBItemDropDownMultiSelector} from '@nu-art/thunderstorm/frontend/components/_TS_MultiSelect/DBItemDropDownMultiSelector';
-import {DBProto_Person} from '@app/core-shared/_entity/person/index';
 
-
-const Props_DropDown: TemplatingProps_TS_GenericDropDown<DBProto_Person> = {
+const Props_DropDown: TemplatingProps_TS_GenericDropDown<DatabaseDef_Person> = {
 	module: ModuleFE_Person,
 	modules: [ModuleFE_Person],
 	mapper: item => [item.firstName, item.lastName, item._id],
@@ -12,7 +15,7 @@ const Props_DropDown: TemplatingProps_TS_GenericDropDown<DBProto_Person> = {
 	renderer: item => <div className="ll_h_c"> {item.firstName} {item.lastName} </div>
 };
 
-export const DropDown_Person = GenericDropDownV3.prepare(Props_DropDown);
+export const DropDown_Person = prepareGenericDropDown(Props_DropDown);
 
 const Props_MultiSelect = DBItemDropDownMultiSelector.propsV3({
 	module: ModuleFE_Person,
@@ -24,4 +27,4 @@ const Props_MultiSelect = DBItemDropDownMultiSelector.propsV3({
 	uiSelector: DropDown_Person.selectable,
 });
 
-export const MultiSelect_Person: any = TS_MultiSelect_V2.prepare(Props_MultiSelect);
+export const MultiSelect_Person = TS_MultiSelect_V2.prepare(Props_MultiSelect);

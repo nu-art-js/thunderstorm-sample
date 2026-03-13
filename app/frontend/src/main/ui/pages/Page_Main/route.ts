@@ -1,4 +1,4 @@
-import {TS_Route} from '@nu-art/thunderstorm/frontend/index';
+import {TS_Route} from '@nu-art/thunderstorm-frontend';
 import {Route_Page_Landing} from '../Page_Landing/route.js';
 import {Route_DevPage} from '../Page_Dev/route.js';
 import { Page_Main } from './Page_Main.js';

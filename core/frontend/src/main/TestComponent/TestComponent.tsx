@@ -1,4 +1,4 @@
-import {ComponentSync} from '@nu-art/thunderstorm/frontend/index';
+import {ComponentSync} from '@nu-art/thunder-widgets';
 import './TestComponent.scss';
 
 type Props_TestComponent = {

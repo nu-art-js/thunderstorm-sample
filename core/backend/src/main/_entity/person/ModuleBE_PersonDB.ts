@@ -1,10 +1,8 @@
-import {DBApiConfigV3, ModuleBE_BaseDB,} from '@nu-art/thunderstorm/backend/index';
-import {DBDef_Person, DBProto_Person} from '@app/core-shared/_entity/person/index';
-
-type Config = DBApiConfigV3<DBProto_Person> & {};
+import {ModuleBE_BaseDB} from '@nu-art/db-api-backend';
+import {DatabaseDef_Person, DBDef_Person} from '@app/core-shared';
 
 export class ModuleBE_PersonDB_Class
-	extends ModuleBE_BaseDB<DBProto_Person, Config> {
+	extends ModuleBE_BaseDB<DatabaseDef_Person> {
 
 	constructor() {
 		super(DBDef_Person);

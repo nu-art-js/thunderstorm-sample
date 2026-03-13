@@ -1,4 +1,4 @@
-import {TS_AppTools, TS_Route} from '@nu-art/thunderstorm/frontend/index';
+import {TS_AppTools, TS_Route} from '@nu-art/thunderstorm-frontend';
 import {Page_Dev_Screens} from './screens.js';
 
 const devPageKey = 'dev-page';

@@ -1,21 +1,22 @@
-import {DBDef_V3, tsValidateNumber, tsValidateString} from '@nu-art/ts-common';
-import {DBProto_Person,} from './types.js';
+import {tsValidateNumber, tsValidateString} from '@nu-art/ts-common';
+import {Database} from '@nu-art/db-api-shared';
+import {DatabaseDef_Person} from './types.js';
 
-const Validator_ModifiableProps: DBProto_Person['modifiablePropsValidator'] = {
+const Validator_ModifiableProps: DatabaseDef_Person['modifiablePropsValidator'] = {
 	firstName: tsValidateString(),
 	lastName: tsValidateString(),
 	age: tsValidateNumber()
 };
 
-const Validator_GeneratedProps: DBProto_Person['generatedPropsValidator'] = {};
+const Validator_GeneratedProps: DatabaseDef_Person['generatedPropsValidator'] = {};
 
-export const DBDef_Person: DBDef_V3<DBProto_Person> = {
-	modifiablePropsValidator: Validator_ModifiableProps,
-	generatedPropsValidator: Validator_GeneratedProps,
-	generatedProps: [],
-	versions: ['1.0.0'],
+export const DBDef_Person: Database<DatabaseDef_Person> = {
 	dbKey: 'person',
 	entityName: 'Person',
+	modifiablePropsValidator: Validator_ModifiableProps,
+	generatedPropsValidator: Validator_GeneratedProps,
+	versions: ['1.0.0'],
+	uniqueKeys: ['_id'],
 	frontend: {
 		group: 'sample-app',
 		name: 'person'

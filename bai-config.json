@@ -51,7 +51,17 @@
       "THUNDERSTORM_VERSION": "0.401.8",
       "THUNDERSTORM_DEP_VERSION": "workspace:*",
       "APP_DEP_VERSION": "workspace:*",
-      "APP_VERSION": "1.0.0"
+      "APP_VERSION": "1.0.0",
+      "@nu-art/api-types": "workspace:*",
+      "@nu-art/db-api-backend": "workspace:*",
+      "@nu-art/db-api-frontend": "workspace:*",
+      "@nu-art/db-api-shared": "workspace:*",
+      "@nu-art/editable-item": "workspace:*",
+      "@nu-art/http-client": "workspace:*",
+      "@nu-art/http-server": "workspace:*",
+      "@nu-art/thunder-widgets": "workspace:*",
+      "@nu-art/user-account-shared": "workspace:*",
+      "@nu-art/permissions-shared": "workspace:*"
     }
   },
   "files": {
