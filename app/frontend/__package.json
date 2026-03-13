@@ -1,5 +1,5 @@
 {
-  "name": "app-frontend",
+  "name": "@app/frontend",
   "version": "$APP_VERSION",
   "description": "Frontend hello world with Thunder",
   "keywords": [

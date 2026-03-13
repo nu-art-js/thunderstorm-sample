@@ -1,5 +1,5 @@
 {
-  "name": "app-backend",
+  "name": "@app/backend",
   "version": "$APP_VERSION",
   "description": "Backend hello world",
   "keywords": [
