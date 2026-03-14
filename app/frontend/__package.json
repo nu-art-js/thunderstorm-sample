@@ -20,8 +20,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "export NODE_OPTIONS='--import data:text/javascript,import%20%7B%20register%20%7D%20from%20%22node%3Amodule%22%3B%20import%20%7B%20pathToFileURL%20%7D%20from%20%22node%3Aurl%22%3B%20register%28%22ts-node%2Fesm%22%2C%20pathToFileURL%28%22.%2F%22%29%29%3B' && webpack --mode development --config webpack.config.ts --env app.env=local",
-    "start": "export NODE_OPTIONS='--import data:text/javascript,import%20%7B%20register%20%7D%20from%20%22node%3Amodule%22%3B%20import%20%7B%20pathToFileURL%20%7D%20from%20%22node%3Aurl%22%3B%20register%28%22ts-node%2Fesm%22%2C%20pathToFileURL%28%22.%2F%22%29%29%3B' && webpack-dev-server --config webpack.config.ts --env app.env=local --open --mode development "
+    "build": "export NODE_OPTIONS='--import data:text/javascript,import%20%7B%20register%20%7D%20from%20%22node%3Amodule%22%3B%20import%20%7B%20pathToFileURL%20%7D%20from%20%22node%3Aurl%22%3B%20register%28%22ts-node%2Fesm%22%2C%20pathToFileURL%28%22.%2F%22%29%29%3B' && webpack --mode development --config webpack.config.ts",
+    "start": "export NODE_OPTIONS='--import data:text/javascript,import%20%7B%20register%20%7D%20from%20%22node%3Amodule%22%3B%20import%20%7B%20pathToFileURL%20%7D%20from%20%22node%3Aurl%22%3B%20register%28%22ts-node%2Fesm%22%2C%20pathToFileURL%28%22.%2F%22%29%29%3B' && webpack-dev-server --config webpack.config.ts --open --mode development"
   },
   "dependencies": {
     "@app/core-shared": "?",
@@ -87,7 +87,35 @@
         "config": {
           "configUrl": "http://127.0.0.1:8124/_config/frontend/manager.json?ns=my-project-local-default-rtdb"
         },
-        "projectId": "my-project-local"
+        "projectId": "my-project-local",
+        "webpackConfig": {
+          "devServerPort": 8000,
+          "devServerSSL": true,
+          "sslKey": "../../.config/.ssl/localhost.key",
+          "sslCert": "../../.config/.ssl/localhost.crt",
+          "minifyHtml": false
+        }
+      },
+      "dev": {
+        "config": {},
+        "projectId": "my-project-dev",
+        "webpackConfig": {
+          "minifyHtml": false
+        }
+      },
+      "staging": {
+        "config": {},
+        "projectId": "my-project-staging",
+        "webpackConfig": {
+          "minifyHtml": false
+        }
+      },
+      "production": {
+        "config": {},
+        "projectId": "my-project-prod",
+        "webpackConfig": {
+          "minifyHtml": true
+        }
       }
     }
   },

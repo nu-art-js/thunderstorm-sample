@@ -17,3 +17,4 @@ imports-*.svg
 !tsconfig.json
 src/main/**/*.d.ts
 .eslintrc.js
+webpack-env.generated.ts
