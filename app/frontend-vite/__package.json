@@ -41,15 +41,15 @@
   },
   "unitConfig": {
     "hasSelfHotReload": true,
-    "servingPort": 8010,
+    "servingPort": 8013,
     "type": "vite-hosting",
     "label": "Frontend Vite",
     "envs": {
       "local": {
         "config": {
-          "configUrl": "http://127.0.0.1:8124/_config/frontend/manager.json?ns=my-project-local-default-rtdb"
+          "configUrl": "http://127.0.0.1:8004/_config/frontend/manager.json?ns=demo-project-default-rtdb"
         },
-        "projectId": "my-project-local"
+        "projectId": "demo-project"
       }
     }
   },

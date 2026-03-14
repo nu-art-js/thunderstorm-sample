@@ -16,8 +16,7 @@ config.ts
 # Backend
 .dependencies
 src/main/config.ts
-src/main/proxy.ts
-src/main/proxy.js
+.trash/proxy/
 src/main/version-app.json
 product-variant-mess
 

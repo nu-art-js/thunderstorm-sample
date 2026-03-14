@@ -74,14 +74,14 @@
     ],
     "type": "firebase-function",
     "label": "TS - Backend",
-    "sslKey": "../../.config/.ssl/server-key.pem",
-    "sslCert": "../../.config/.ssl/server-cert.pem",
+    "sslKey": "../../.config/.ssl/localhost.key",
+    "sslCert": "../../.config/.ssl/localhost.crt",
     "envs": {
       "local": {
-        "projectId": "thunderstorm-dev"
+        "projectId": "demo-project"
       },
       "prod": {
-        "projectId": "thunderstorm"
+        "projectId": "real-project"
       }
     }
   },

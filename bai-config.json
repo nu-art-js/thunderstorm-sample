@@ -90,7 +90,7 @@
       }
     },
     "backend": {
-      "proxy": "./.config/backend/proxy._ts"
+      "proxy": null
     }
   }
 }

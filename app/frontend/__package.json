@@ -85,9 +85,9 @@
     "envs": {
       "local": {
         "config": {
-          "configUrl": "http://127.0.0.1:8124/_config/frontend/manager.json?ns=my-project-local-default-rtdb"
+          "configUrl": "http://127.0.0.1:8004/_config/frontend/manager.json?ns=demo-project-default-rtdb"
         },
-        "projectId": "my-project-local",
+        "projectId": "demo-project",
         "webpackConfig": {
           "devServerPort": 8000,
           "devServerSSL": true,
@@ -96,23 +96,9 @@
           "minifyHtml": false
         }
       },
-      "dev": {
-        "config": {},
-        "projectId": "my-project-dev",
-        "webpackConfig": {
-          "minifyHtml": false
-        }
-      },
-      "staging": {
-        "config": {},
-        "projectId": "my-project-staging",
-        "webpackConfig": {
-          "minifyHtml": false
-        }
-      },
       "production": {
         "config": {},
-        "projectId": "my-project-prod",
+        "projectId": "real-project",
         "webpackConfig": {
           "minifyHtml": true
         }
