@@ -38,6 +38,7 @@
       "jose": "^5.0.0",
       "node-forge": "^1.3.1",
       "vite-plugin-node-polyfills": "^0.25.0",
+      "vite-plugin-svgr": "^4.3.0",
       "@google-cloud/common": "^5.0.2",
       "@google-cloud/storage": "^7.15.0",
       "@google-cloud/firestore": "^7.11.0",
@@ -62,6 +63,8 @@
       "@nu-art/http-client": "workspace:*",
       "@nu-art/http-server": "workspace:*",
       "@nu-art/thunder-widgets": "workspace:*",
+      "@nu-art/thunderstorm-frontend": "workspace:*",
+      "@nu-art/ts-styles": "workspace:*",
       "@nu-art/user-account-shared": "workspace:*",
       "@nu-art/permissions-shared": "workspace:*"
     }

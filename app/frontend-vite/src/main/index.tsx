@@ -7,12 +7,19 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-import {createRoot} from 'react-dom/client';
-import {App} from './App.js';
+import {ModulePackFE_Thunderstorm, Thunder} from '@nu-art/thunderstorm-frontend';
+import {ThunderstormDefaultApp} from '@nu-art/thunderstorm-frontend/core/ThunderstormDefaultApp';
+import {config} from './config.js';
+import {Route_Page_Main} from './ui/pages/Page_Main/route.js';
+import {ModuleFE_App} from './modules/ModuleFE_App.js';
 import './App.scss';
 
-const root = document.getElementById('root');
-if (!root)
-	throw new Error('Root element not found');
+const modules = [
+	ModuleFE_App,
+];
 
-createRoot(root).render(<App />);
+new Thunder(config)
+	.addModulePack(ModulePackFE_Thunderstorm)
+	.addModulePack(modules)
+	.setMainApp(ThunderstormDefaultApp, {rootRoute: Route_Page_Main})
+	.build();

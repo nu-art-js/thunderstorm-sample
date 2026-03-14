@@ -1,0 +1,20 @@
+# Global
+**/.DS_Store
+
+# Node
+node_modules
+
+# Thunderstorm
+dist
+dist-test
+docs
+build
+package.json
+package-lock.json
+src/main/config.ts
+src/sw/index.js
+imports-*.svg
+!tsconfig.json
+src/main/**/*.d.ts
+.eslintrc.js
+webpack-env.generated.ts

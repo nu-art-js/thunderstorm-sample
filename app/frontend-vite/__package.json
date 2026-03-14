@@ -23,25 +23,32 @@
   },
   "dependencies": {
     "@nu-art/ts-common": "?",
+    "@nu-art/thunderstorm-frontend": "?",
+    "@nu-art/ts-styles": "?",
     "react": "?",
-    "react-dom": "?"
+    "react-dom": "?",
+    "react-router-dom": "?"
   },
   "devDependencies": {
     "@types/react": "?",
     "@types/react-dom": "?",
+    "@types/react-router-dom": "?",
     "@vitejs/plugin-react": "?",
     "sass": "?",
     "vite": "?",
-    "vite-plugin-node-polyfills": "?"
+    "vite-plugin-node-polyfills": "?",
+    "vite-plugin-svgr": "?"
   },
   "unitConfig": {
     "hasSelfHotReload": true,
-    "servingPort": 3000,
+    "servingPort": 8010,
     "type": "vite-hosting",
     "label": "Frontend Vite",
     "envs": {
       "local": {
-        "config": {},
+        "config": {
+          "configUrl": "http://127.0.0.1:8124/_config/frontend/manager.json?ns=my-project-local-default-rtdb"
+        },
         "projectId": "my-project-local"
       }
     }

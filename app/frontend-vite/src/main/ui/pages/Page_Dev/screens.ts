@@ -7,10 +7,6 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-import type {FC} from 'react';
+import {AppToolsScreen} from '@nu-art/thunderstorm-frontend';
 
-export const App: FC = () => (
-	<div className="app">
-		<h1>Hello Vite</h1>
-	</div>
-);
+export const Page_Dev_Screens: AppToolsScreen[] = [];
