@@ -7,6 +7,6 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-import {AppToolsScreen} from '@nu-art/thunderstorm-frontend';
+import {AppToolsScreen} from '@nu-art/thunder-ui-modules';
 
 export const Page_Dev_Screens: AppToolsScreen[] = [];

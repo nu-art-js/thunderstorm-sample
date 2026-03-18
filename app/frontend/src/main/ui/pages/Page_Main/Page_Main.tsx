@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import {AppPage} from '@nu-art/thunderstorm-frontend';
+import {AppPage} from '@nu-art/thunder-widgets';
 import {Outlet} from 'react-router-dom';
 
 export class Page_Main

@@ -7,7 +7,8 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-import {AppPageV2, LL_V_L, ModuleFE_RoutingV2, TS_Button} from '@nu-art/thunderstorm-frontend';
+import {AppPageV2, LL_V_L, TS_Button} from '@nu-art/thunder-widgets';
+import {ModuleFE_Routing} from '@nu-art/thunder-routing';
 import './Page_Landing.scss';
 import {Route_DevPage} from '../Page_Dev/route.js';
 
@@ -22,7 +23,7 @@ export class Page_Landing
 		return <LL_V_L id={'landing-page'}>
 			{this.renderReactSVG()}
 			<div className={'landing-page__message'}>Welcome to ThunderStorm template app (Vite)!</div>
-			<TS_Button onClick={() => ModuleFE_RoutingV2.goToRoute(Route_DevPage)}>Go to Dev Page</TS_Button>
+			<TS_Button onClick={() => ModuleFE_Routing.goToRoute(Route_DevPage)}>Go to Dev Page</TS_Button>
 		</LL_V_L>;
 	}
 

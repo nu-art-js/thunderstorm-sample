@@ -1,6 +1,7 @@
 {
   "name": "@app/core-frontend",
-  "version": "$APP_VERSION",
+  "version": "{{APP_VERSION}}",
+  "private": true,
   "description": "Core FE",
   "license": "Apache-2.0",
   "scripts": {
@@ -16,6 +17,7 @@
     "@nu-art/db-api-shared": "?",
     "@nu-art/editable-item": "?",
     "@nu-art/http-client": "?",
+    "@nu-art/thunder-core": "?",
     "@nu-art/thunder-widgets": "?",
     "@nu-art/ts-common": "?",
     "moment": "^2.29.4",

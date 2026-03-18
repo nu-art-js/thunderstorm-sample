@@ -7,7 +7,7 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-import {TS_Route} from '@nu-art/thunderstorm-frontend';
+import {TS_Route} from '@nu-art/thunder-routing';
 import {Route_Page_Landing} from '../Page_Landing/route.js';
 import {Route_DevPage} from '../Page_Dev/route.js';
 import {Page_Main} from './Page_Main.js';

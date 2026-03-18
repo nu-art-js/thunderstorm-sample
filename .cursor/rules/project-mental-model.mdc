@@ -1,0 +1,28 @@
+---
+description: Thunderstorm Template project mental model — always-applied conventions and constraints
+alwaysApply: true
+---
+
+# Thunderstorm Template Project Mental Model
+
+## Composing with Thunderstorm
+
+- @nu-art/thunderstorm-* packages are deprecated and have been broken into smaller modular packages. Do not import from them.
+
+- **Forbidden packages (use thunder-core instead):** Do not use `@nu-art/storm-shared`. Use `@nu-art/thunder-core` for dispatcher and shared types.
+
+- For TypeScript network calling and serving, use the `@nu-art/http-*` packages and their respective decorators (see their respective rules).
+
+- For TypeScript database handling and UI syncing use the `@nu-art/db-api-*` packages (see their respective rules).
+
+- When creating a new TypeScript package follow the Package standard [_thunderstorm/.rules/contributing/package-standard.mdc](_thunderstorm/.rules/contributing/package-standard.mdc) which defines structure, docs, tests, metadata, and the package checklist.
+
+## Building and testing
+
+- BAI is the only way to do anything in this repo, and unless explicitly specified never use pnpm.
+- BAI is a CLI tool; it is **not** run via pnpm. Invoke it independently. See **build-and-install rules** for how to run it.
+- To build: `bai -up=<packages-regexp>` (use -up to build specific packages, otherwise it builds the entire monorepo)
+- To run tests: `bai -t -tt=<pure|firebase|playwright> -up=<packages-regexp>` (use -up to test specific packages, otherwise it tests the entire monorepo)
+- To clean install and setup the mono: `bai init` (only in extreme case)
+- tsconfig.json files are auto-generated.
+- **Never run `npx tsc --noEmit`** (or equivalent raw tsc in package dirs). Use BAI for build and type-checking.

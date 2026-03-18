@@ -1,6 +1,7 @@
 {
   "name": "@app/core-shared",
-  "version": "$APP_VERSION",
+  "version": "{{APP_VERSION}}",
+  "private": true,
   "description": "Core Shared",
   "license": "Apache-2.0",
   "scripts": {
@@ -11,6 +12,7 @@
     "linkDirectory": true
   },
   "dependencies": {
+    "@nu-art/api-types": "?",
     "@nu-art/db-api-shared": "?",
     "@nu-art/ts-common": "?"
   },

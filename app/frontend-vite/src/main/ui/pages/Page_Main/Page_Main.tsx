@@ -7,7 +7,7 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-import {AppPage} from '@nu-art/thunderstorm-frontend';
+import {AppPage} from '@nu-art/thunder-widgets';
 import {Outlet} from 'react-router-dom';
 
 export class Page_Main

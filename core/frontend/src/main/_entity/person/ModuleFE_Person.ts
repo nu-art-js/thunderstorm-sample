@@ -1,32 +1,22 @@
-import {ModuleFE_BaseApi, DBConfig_ModuleFE, EventDispatcher} from '@nu-art/db-api-frontend';
-import {ApiCallerEventType, CrudApiDef} from '@nu-art/db-api-shared';
-import {DatabaseDef_Person, DB_Person, DBDef_Person} from '@app/core-shared';
+import {buildConfigFromDBDef, ModuleFE_BaseApi} from '@nu-art/db-api-frontend';
+import {type ApiCallerEventType, CrudApiDef} from '@nu-art/db-api-shared';
+import {ThunderDispatcher} from '@nu-art/thunder-core';
+import {DatabaseDef_Person, DBDef_Person} from '@app/core-shared';
 
-const personConfig: DBConfig_ModuleFE<DatabaseDef_Person> = {
-	dbKey: DBDef_Person.dbKey,
-	validator: DBDef_Person.modifiablePropsValidator,
-	uniqueKeys: (DBDef_Person.uniqueKeys ?? ['_id']) as DatabaseDef_Person['uniqueKeys'],
-	versions: DBDef_Person.versions,
-	dbConfig: {
-		name: DBDef_Person.frontend?.name ?? DBDef_Person.dbKey,
-		group: DBDef_Person.frontend?.group ?? 'default',
-		version: DBDef_Person.versions[0] ?? '1.0.0',
-		uniqueKeys: ['_id']
-	}
-};
+export interface OnPersonUpdated {
+	__onPersonUpdated: (...params: ApiCallerEventType<DatabaseDef_Person['dbType']>) => void;
+}
 
-export const dispatch_onPersonUpdated: EventDispatcher<DB_Person> = (..._params: ApiCallerEventType<DB_Person>) => {
-	// No-op or wire to app dispatcher when needed
-};
+export const dispatch_onPersonChanged = new ThunderDispatcher<OnPersonUpdated, '__onPersonUpdated'>('__onPersonUpdated');
 
 export class ModuleFE_Person_Class
 	extends ModuleFE_BaseApi<DatabaseDef_Person> {
 
 	constructor() {
 		super({
-			config: personConfig,
+			config: buildConfigFromDBDef<DatabaseDef_Person>(DBDef_Person),
 			crudApiDef: CrudApiDef<DatabaseDef_Person>(DBDef_Person.dbKey),
-			dispatcher: dispatch_onPersonUpdated
+			dispatcher: (...args) => dispatch_onPersonChanged.dispatchAll(...args)
 		});
 	}
 }

@@ -7,7 +7,8 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-import {TS_AppTools, TS_Route} from '@nu-art/thunderstorm-frontend';
+import {TS_AppTools} from '@nu-art/thunder-ui-modules';
+import {TS_Route} from '@nu-art/thunder-routing';
 import {Page_Dev_Screens} from './screens.js';
 
 const devPageKey = 'dev-page';

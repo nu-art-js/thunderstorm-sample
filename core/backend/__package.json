@@ -1,6 +1,7 @@
 {
   "name": "@app/core-backend",
-  "version": "$APP_VERSION",
+  "version": "{{APP_VERSION}}",
+  "private": true,
   "description": "Core BE",
   "license": "Apache-2.0",
   "scripts": {
@@ -15,6 +16,8 @@
     "@nu-art/db-api-backend": "?",
     "@nu-art/db-api-shared": "?",
     "@nu-art/firebase-backend": "?",
+    "@nu-art/firebase-shared": "?",
+    "@nu-art/http-server": "?",
     "@nu-art/ts-common": "?",
     "moment": "^2.29.4"
   },
