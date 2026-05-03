@@ -92,7 +92,7 @@
   },
   "unitConfig": {
     "hasSelfHotReload": true,
-    "servingPort": 8000,
+    "servingPort": 8001,
     "type": "firebase-hosting",
     "label": "Petit Fawn - Frontend",
     "envs": {
@@ -102,7 +102,7 @@
         },
         "projectId": "demo-project",
         "webpackConfig": {
-          "devServerPort": 8000,
+          "devServerPort": 8001,
           "devServerSSL": true,
           "sslKey": "../../.config/.ssl/localhost.key",
           "sslCert": "../../.config/.ssl/localhost.crt",

@@ -75,10 +75,21 @@
     "node": "22"
   },
   "unitConfig": {
-    "debugPort": 8001,
+    "debugPort": 8000,
     "basePort": 8002,
     "functions": [
-      "api"
+      {
+        "name": "api",
+        "trigger": "http",
+        "resources": {
+          "cpu": 1,
+          "memory": "2Gi",
+          "timeout": 540,
+          "concurrency": 100,
+          "minInstances": 0,
+          "maxInstances": 3
+        }
+      }
     ],
     "type": "firebase-function",
     "label": "TS - Backend",
