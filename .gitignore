@@ -32,3 +32,7 @@ tsconfig.json
 running-status.json
 .cache
 .config/.ssl
+
+# Track test emulator config (bai-config paths); generic firebase.json stays ignored
+!.config/tests/firebase/firebase.json
+!.config/tests/firebase/.firebaserc
