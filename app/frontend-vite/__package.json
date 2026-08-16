@@ -28,6 +28,8 @@
     "@nu-art/thunder-routing": "?",
     "@nu-art/thunder-ui-modules": "?",
     "@nu-art/thunder-widgets": "?",
+    "@nu-art/user-account-frontend": "?",
+    "@nu-art/password-auth-frontend": "?",
     "@nu-art/ts-styles": "?",
     "react": "?",
     "react-dom": "?",

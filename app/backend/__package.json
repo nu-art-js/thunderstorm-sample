@@ -50,6 +50,8 @@
     "@nu-art/ts-styles": "?",
     "@nu-art/user-account-backend": "?",
     "@nu-art/user-account-shared": "?",
+    "@nu-art/password-auth-backend": "?",
+    "@nu-art/password-auth-shared": "?",
     "@app/core-shared": "?",
     "@app/core-backend": "?",
     "@slack/web-api": "^5.8.1",

@@ -9,6 +9,8 @@
  */
 import {Thunder} from '@nu-art/thunder-core';
 import {ThunderstormDefaultApp} from '@nu-art/thunder-widgets';
+import {ModulePackFE_Accounts} from '@nu-art/user-account-frontend';
+import {ModulePackFE_PasswordAuth} from '@nu-art/password-auth-frontend';
 import type {Module} from '@nu-art/ts-common';
 import {config} from './config.js';
 import {Route_Page_Main} from './ui/pages/Page_Main/route.js';
@@ -23,6 +25,8 @@ const modules = [
 
 new Thunder(config)
 	.addModulePack(modulePackFE_Thunderstorm)
+	.addModulePack(ModulePackFE_Accounts)
+	.addModulePack(ModulePackFE_PasswordAuth)
 	.addModulePack(modules)
 	.setMainApp(ThunderstormDefaultApp, {rootRoute: Route_Page_Main})
 	.build();

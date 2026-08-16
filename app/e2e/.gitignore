@@ -11,10 +11,7 @@ docs
 build
 package.json
 package-lock.json
-src/main/config.ts
-src/sw/index.js
-imports-*.svg
-!tsconfig.json
-src/main/**/*.d.ts
+config.ts
+src/main/tsconfig.json
+src/test/tsconfig.json
 .eslintrc.js
-webpack-env.generated.ts

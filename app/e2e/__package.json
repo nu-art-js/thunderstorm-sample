@@ -1,0 +1,41 @@
+{
+  "name": "@app/e2e",
+  "version": "{{APP_VERSION}}",
+  "private": true,
+  "description": "Sample product journey E2E (test-only)",
+  "keywords": [
+    "e2e",
+    "test",
+    "thunderstorm",
+    "sample"
+  ],
+  "license": "Apache-2.0",
+  "author": "TacB0sS",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@app/backend": "?",
+    "@nu-art/e2e-harness": "?",
+    "@nu-art/http-client": "?",
+    "@nu-art/api-types": "?",
+    "@nu-art/password-auth-shared": "?",
+    "@nu-art/user-account-shared": "?",
+    "@nu-art/ts-common": "?"
+  },
+  "devDependencies": {
+    "@nu-art/testalot": "?",
+    "chai": "?",
+    "@types/chai": "?",
+    "@types/mocha": "?",
+    "@types/node": "?"
+  },
+  "unitConfig": {
+    "type": "typescript-lib"
+  },
+  "type": "module",
+  "publishConfig": {
+    "directory": "dist",
+    "linkDirectory": true
+  }
+}

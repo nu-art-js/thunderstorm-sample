@@ -6,6 +6,8 @@
       "firebase-admin": "13.4.0",
       "firebase-functions": "6.3.2",
       "firebase-tools": "latest",
+      "konva": "^10.2.3",
+      "react-konva": "^18.2.14",
       "react": "^18.0.0",
       "@types/react": "^18.0.0",
       "react-dom": "^18.0.0",
@@ -53,7 +55,8 @@
       "papaparse": "^5.5.3",
       "@types/papaparse": "^5.5.2",
       "@vitejs/plugin-react": "^4.5.0",
-      "THUNDERSTORM_VERSION": "0.500.0",
+      "mongodb": "^7.1.1",
+      "THUNDERSTORM_VERSION": "0.500.6",
       "APP_VERSION": "1.0.0"
     }
   },
