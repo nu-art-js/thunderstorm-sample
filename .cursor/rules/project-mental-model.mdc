@@ -21,8 +21,12 @@ alwaysApply: true
 
 - BAI is the only way to do anything in this repo, and unless explicitly specified never use pnpm.
 - BAI is a CLI tool; it is **not** run via pnpm. Invoke it independently. See **build-and-install rules** for how to run it.
+- Always go through this repo’s `build-and-install.sh`. It injects `--ts-version` from `version-thunderstorm.json` (0.500.x). Upstream BAI defaults to `~0.401.0`. After init, `node_modules/@nu-art/build-and-install` must be 0.500.x; if it is 0.401.x, re-init with `--ts-version=<pin>` from that JSON file.
+- `_thunderstorm` is a submodule — `git submodule update --init --recursive` before any BAI command.
+- **Docker must be running** before `bai -l` or `bai -t -tt=pure -up=@app/e2e$`.
+- **`GCP_PROJECT_ID`** must be a real GCP project before password-auth / JWT (not `demo-project` / `*-local`).
 - To build: `bai -up=<packages-regexp>` (use -up to build specific packages, otherwise it builds the entire monorepo)
 - To run tests: `bai -t -tt=<pure|firebase|playwright> -up=<packages-regexp>` (use -up to test specific packages, otherwise it tests the entire monorepo)
-- To clean install and setup the mono: `bai init` (only in extreme case)
+- To clean install and setup the mono: `bash build-and-install.sh init` (only in extreme case)
 - tsconfig.json files are auto-generated.
 - **Never run `npx tsc --noEmit`** (or equivalent raw tsc in package dirs). Use BAI for build and type-checking.
