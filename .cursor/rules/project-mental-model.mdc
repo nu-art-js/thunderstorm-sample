@@ -28,7 +28,7 @@ alwaysApply: true
 - To build: `bai -up=<packages-regexp>` (use -up to build specific packages, otherwise it builds the entire monorepo)
 - To run tests: `bai -t -tt=<pure|firebase|playwright> -up=<packages-regexp>` (use -up to test specific packages, otherwise it tests the entire monorepo)
 - To clean install and setup the mono: `bash build-and-install.sh init` (only in extreme case)
-- tsconfig.json files are auto-generated.
+- tsconfig.json files are auto-generated and gitignored. Compiler templates live in `.config/`. Do not commit a tsconfig.
 - **Never run `npx tsc --noEmit`** (or equivalent raw tsc in package dirs). Use BAI for build and type-checking.
 - Never edit generated `package.json`, `tsconfig.json`, or `pnpm-workspace.yaml`. Edit `__package.json` and `bai-config.json`, then run BAI.
 
@@ -42,3 +42,4 @@ These files already exist. Fill placeholders. Do not invent a second copy.
 - **Deploy** only through `deploy.sh`. Do not call `--build-push-image` or `--deploy-image` yourself. Prod needs `DEPLOY_CONFIRM_PROD=yes` and an explicit user yes. Procedure: `.cursor/rules/deploy-policy.mdc`.
 - **RTDB config changes** go in `releases/<semver>.json` (`default` and/or `app` only). Do not PATCH `/_config` by hand.
 - **Tests:** `*.test.ts` (pure), `*.test.firebase.ts` (`stormTester` from `@nu-art/storm-testalot`, `bai -t -tt=firebase`), `*.test.playwright.ts` (`bai -t -tt=playwright`). Product journeys stay in `@app/e2e` (`bai -t -tt=pure -up=@app/e2e$`). Do not add Jest, Vitest, or another `e2e-harness` package. Spawned firebase/node children must keep deleting `NODE_OPTIONS`.
+- **Beamz MCP:** `.cursor/mcp.json` tells Beamz which project this checkout is. The server key is the project slug. The URL stays `https://api.beamz.dev/mcp/beamz`.

@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "<project-name>": {
+      "url": "https://api.beamz.dev/mcp/beamz"
+    }
+  }
+}

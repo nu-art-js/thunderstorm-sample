@@ -28,7 +28,9 @@ auto-print-poc
 **/.DS_Store
 neural
 *.log
-tsconfig.json
+# BAI writes these and stamps a machine-local sourceRoot. Templates stay in .config/.
+**/tsconfig.json
+!.config/tsconfig.json
 running-status.json
 .cache
 .config/.ssl
