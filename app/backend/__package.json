@@ -77,8 +77,8 @@
     "node": "22"
   },
   "unitConfig": {
-    "debugPort": 8000,
-    "basePort": 8002,
+    "debugPort": "{{PORT_BACKEND_DEBUG}}",
+    "basePort": "{{PORT_BACKEND_APEX}}",
     "functions": [
       {
         "name": "api",
@@ -97,12 +97,30 @@
     "label": "TS - Backend",
     "sslKey": "../../.config/.ssl/localhost.key",
     "sslCert": "../../.config/.ssl/localhost.crt",
+    "mongo": {
+      "port": "{{PORT_MONGO}}",
+      "dataDir": "mongo-data"
+    },
+    "containerDeployment": {
+      "artifactRegistry": {
+        "region": "{{ARTIFACT_REGION}}",
+        "repository": "web-apps",
+        "projectId": "{{ARTIFACT_PROJECT_ID}}"
+      },
+      "imageName": "app-backend"
+    },
     "envs": {
       "local": {
-        "projectId": "demo-project"
+        "projectId": "{{FIREBASE_PROJECT_LOCAL}}"
+      },
+      "dev": {
+        "projectId": "replace-dev"
+      },
+      "staging": {
+        "projectId": "replace-staging"
       },
       "prod": {
-        "projectId": "real-project"
+        "projectId": "replace-prod"
       }
     }
   },

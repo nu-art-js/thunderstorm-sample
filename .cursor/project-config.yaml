@@ -1,0 +1,3 @@
+dev-workspaces:
+  manifest: .cursor/dev-workspaces/workspaces.json
+  skill: launch-workspace

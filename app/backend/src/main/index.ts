@@ -15,6 +15,7 @@ import type {ApiDef} from '@nu-art/api-types';
 import {OpenApis} from './auth-open-apis.js';
 
 HttpServer.getDefault().mergeRuntimeConfig({
+	// Fallback must match PORT_BACKEND_APEX in bai-config.json. BAI sets BACKEND_PORT from basePort.
 	port: Number(process.env.PORT || process.env.BACKEND_PORT) || 8002,
 	bodyParserLimit: '32mb',
 	ssl: process.env.PORT ? undefined : {

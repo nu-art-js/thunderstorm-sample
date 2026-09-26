@@ -47,15 +47,41 @@
   },
   "unitConfig": {
     "hasSelfHotReload": true,
-    "servingPort": 8001,
+    "servingPort": "{{PORT_FRONTEND}}",
     "type": "vite-hosting",
     "label": "Frontend Vite",
+    "hostingDeployment": {
+      "artifactRegistry": {
+        "region": "{{ARTIFACT_REGION}}",
+        "repository": "hosting-builds",
+        "projectId": "{{ARTIFACT_PROJECT_ID}}"
+      },
+      "packageName": "app-frontend"
+    },
     "envs": {
       "local": {
         "config": {
-          "configUrl": "http://127.0.0.1:8004/_config/frontend/manager.json?ns=demo-project-default-rtdb"
+          "configUrl": "http://127.0.0.1:{{PORT_CONFIG}}/_config/frontend/manager.json?ns={{FIREBASE_PROJECT_LOCAL}}-default-rtdb"
         },
-        "projectId": "demo-project"
+        "projectId": "{{FIREBASE_PROJECT_LOCAL}}"
+      },
+      "dev": {
+        "config": {
+          "configUrl": "https://replace-dev-default-rtdb.firebaseio.com/_config/frontend/manager.json"
+        },
+        "projectId": "replace-dev"
+      },
+      "staging": {
+        "config": {
+          "configUrl": "https://replace-staging-default-rtdb.firebaseio.com/_config/frontend/manager.json"
+        },
+        "projectId": "replace-staging"
+      },
+      "prod": {
+        "config": {
+          "configUrl": "https://replace-prod-default-rtdb.firebaseio.com/_config/frontend/manager.json"
+        },
+        "projectId": "replace-prod"
       }
     }
   },

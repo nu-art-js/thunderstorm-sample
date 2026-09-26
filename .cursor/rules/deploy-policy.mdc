@@ -1,0 +1,36 @@
+---
+description: Deployment policy — load when deploying, preparing a release, bumping a version, or rolling back
+alwaysApply: false
+---
+
+# Deploy policy
+
+Ship only through `deploy.sh` at the repo root. Do not call `bai --build-push-image` or `bai --deploy-image` yourself. The script owns `-se`, the per-unit loop, the RTDB config walk, the `env/<env>` tag, and the restore to `-se=local`.
+
+Local Docker is not required. Cloud Build builds the image. `gcloud` must be authenticated. `deploy.sh` puts the Cloud SDK on `PATH` and falls back to application-default credentials. Do not export `PATH` or run `gcloud config set` from the chat.
+
+## Version
+
+`version-app.json` at the repo root is the app version (`{"version":"x.y.z"}`). Bump patch unless the user asked for minor or major. Tag `v<version>` and push the tag. Do not add a second `VERSION` file. Do not force-move `v*` tags.
+
+`env/<env>` is a moving pointer. `deploy.sh` force-moves it after a successful deploy. That is the only force-tag this repo allows.
+
+## Sequence
+
+1. Clean tree, branch pushed, no divergence.
+2. If any `__package.json` changed in the commits being shipped: `bash build-and-install.sh -i -nb`. Otherwise `bash build-and-install.sh -nb` is enough when deps did not change. Never `bai -i -up=<subset>`.
+3. Build and `bai -t -up=@app` pass.
+4. Commit the version bump, tag `v<version>`, push commit and tag.
+5. `bash deploy.sh build <version> staging` then `bash deploy.sh deploy <version> staging`.
+6. Smoke-check staging. If it is unhealthy, `bash deploy.sh deploy <previous> staging` and stop.
+7. Prod only after an explicit user yes: `DEPLOY_CONFIRM_PROD=yes bash deploy.sh deploy <version> prod`. Same artifact. Do not rebuild between staging and prod.
+
+`env` defaults to `staging`. The script refuses `local` and refuses `prod` without `DEPLOY_CONFIRM_PROD=yes`.
+
+## Config deltas
+
+Module config that must land in RTDB goes in `releases/<semver>.json` (`default` and/or `app` only). See `releases/README.md`. The deploy script applies the walk after the backend revision is serving. Do not PATCH `/_config` yourself.
+
+## Fill before the first real deploy
+
+`bai-config.json` `ARTIFACT_PROJECT_ID`, plus `containerDeployment.imageName` and `hostingDeployment.packageName`, and the `replace-dev` / `replace-staging` / `replace-prod` project ids in the app `__package.json` files. Until those are real, deploy will fail closed.

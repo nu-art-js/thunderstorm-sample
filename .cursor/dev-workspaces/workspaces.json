@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nu-art-js/agent-skill--launch-workspace/main/skills/launch-workspace/workspaces.schema.json",
+  "workspaces": {
+    "sample-dev": {
+      "title": "Sample Dev",
+      "root": ".",
+      "panes": [
+        { "label": "watch", "command": "bai -w -wbt" },
+        { "label": "backend", "command": "sleep 1 && bai -nb -up=@app/backend -l" },
+        { "label": "frontend", "command": "sleep 2 && bai -nb -up=@app/frontend-vite -lf" }
+      ]
+    }
+  }
+}

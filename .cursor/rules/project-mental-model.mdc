@@ -30,3 +30,15 @@ alwaysApply: true
 - To clean install and setup the mono: `bash build-and-install.sh init` (only in extreme case)
 - tsconfig.json files are auto-generated.
 - **Never run `npx tsc --noEmit`** (or equivalent raw tsc in package dirs). Use BAI for build and type-checking.
+- Never edit generated `package.json`, `tsconfig.json`, or `pnpm-workspace.yaml`. Edit `__package.json` and `bai-config.json`, then run BAI.
+
+## Ports, deploy, tests
+
+These files already exist. Fill placeholders. Do not invent a second copy.
+
+- **Human ports and the local Firebase project id** live only in `bai-config.json` `templateParams.params` (`PORT_*`, `FIREBASE_PROJECT_LOCAL`, `ARTIFACT_*`). App `__package.json` files reference them as `{{PARAM}}`.
+- **E2E zone** (backend 8102, mongo 27039) lives only in `app/e2e/src/test/sample-e2e-harness-constants.ts`. It must not collide with `PORT_BACKEND_APEX`.
+- The listen fallback in `app/backend/src/main/index.ts` must match `PORT_BACKEND_APEX`.
+- **Deploy** only through `deploy.sh`. Do not call `--build-push-image` or `--deploy-image` yourself. Prod needs `DEPLOY_CONFIRM_PROD=yes` and an explicit user yes. Procedure: `.cursor/rules/deploy-policy.mdc`.
+- **RTDB config changes** go in `releases/<semver>.json` (`default` and/or `app` only). Do not PATCH `/_config` by hand.
+- **Tests:** `*.test.ts` (pure), `*.test.firebase.ts` (`stormTester` from `@nu-art/storm-testalot`, `bai -t -tt=firebase`), `*.test.playwright.ts` (`bai -t -tt=playwright`). Product journeys stay in `@app/e2e` (`bai -t -tt=pure -up=@app/e2e$`). Do not add Jest, Vitest, or another `e2e-harness` package. Spawned firebase/node children must keep deleting `NODE_OPTIONS`.

@@ -47,7 +47,7 @@ Never `bai -i -up=<subset>` — that rewrites a broken `pnpm-workspace.yaml`.
 docker info   # must succeed before launch or e2e
 ```
 
-Human `bai -l` uses backend **8002**. E2E uses a dedicated zone: backend **8102**, mongo **27039**.
+Human ports live in [`bai-config.json`](bai-config.json) `templateParams.params` (backend **8002**, frontend **8001**, mongo **27018**). E2E uses a dedicated zone: backend **8102**, mongo **27039**.
 
 ## GCP / JWT secrets
 
@@ -69,5 +69,20 @@ export GCP_PROJECT_ID=<real-gcp-project>
 | Vite frontend (port 8001) | `bai -nb -up=@app/frontend-vite -lf` |
 | Harness unit tests | `bai -t -nb -tt=pure -up=e2e-harness` |
 | Product e2e | `bai -t -nb -tt=pure -up=@app/e2e$` |
+| Firebase module tests | `bai -t -nb -tt=firebase -up=<package>` |
+| Playwright | `bai -t -nb -tt=playwright -up=<package>` |
+| Deploy staging | `bash deploy.sh build <version> staging` then `bash deploy.sh deploy <version> staging` |
 
 Flags: [`_thunderstorm/.rules/operational/bai-cli.mdc`](_thunderstorm/.rules/operational/bai-cli.mdc).
+
+## Deploy
+
+`deploy.sh` is the only ship path. It builds in Cloud Build (no local Docker), deploys one unit at a time, applies `releases/<semver>.json` onto RTDB after the backend revision is serving, moves the `env/<env>` tag, and restores `-se=local`.
+
+`env` defaults to `staging`. Prod refuses to run unless `DEPLOY_CONFIRM_PROD=yes`.
+
+Before the first real deploy, replace `replace-artifact-project`, `replace-dev`, `replace-staging`, and `replace-prod` (see `.cursor/rules/deploy-policy.mdc`). `version-app.json` is the app version. Tag `v<version>`.
+
+```bash
+python3 deploy_rtdb_deltas_test.py
+```
