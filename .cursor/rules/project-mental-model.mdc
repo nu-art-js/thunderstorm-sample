@@ -36,7 +36,7 @@ alwaysApply: true
 
 These files already exist. Fill placeholders. Do not invent a second copy.
 
-- **Human ports and the local Firebase project id** live only in `bai-config.json` `templateParams.params` (`PORT_*`, `FIREBASE_PROJECT_LOCAL`, `ARTIFACT_*`). App `__package.json` files reference them as `{{PARAM}}`.
+- **Human ports** are named in `bai-config.json` `templateParams.params`. `debugPort`, `basePort`, `mongo.port`, and `servingPort` in `__package.json` are literals with the same numbers. BAI 0.500.6 rejects `"{{PORT_*}}"` on those fields. `FIREBASE_PROJECT_LOCAL` and `ARTIFACT_*` stay as `{{PARAM}}`.
 - **E2E zone** (backend 8102, mongo 27039) lives only in `app/e2e/src/test/sample-e2e-harness-constants.ts`. It must not collide with `PORT_BACKEND_APEX`.
 - The listen fallback in `app/backend/src/main/index.ts` must match `PORT_BACKEND_APEX`.
 - **Deploy** only through `deploy.sh`. Do not call `--build-push-image` or `--deploy-image` yourself. Prod needs `DEPLOY_CONFIRM_PROD=yes` and an explicit user yes. Procedure: `.cursor/rules/deploy-policy.mdc`.

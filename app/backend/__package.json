@@ -77,8 +77,8 @@
     "node": "22"
   },
   "unitConfig": {
-    "debugPort": "{{PORT_BACKEND_DEBUG}}",
-    "basePort": "{{PORT_BACKEND_APEX}}",
+    "debugPort": 8000,
+    "basePort": 8002,
     "functions": [
       {
         "name": "api",
@@ -98,7 +98,7 @@
     "sslKey": "../../.config/.ssl/localhost.key",
     "sslCert": "../../.config/.ssl/localhost.crt",
     "mongo": {
-      "port": "{{PORT_MONGO}}",
+      "port": 27018,
       "dataDir": "mongo-data"
     },
     "containerDeployment": {

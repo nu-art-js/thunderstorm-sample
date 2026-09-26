@@ -47,7 +47,7 @@
   },
   "unitConfig": {
     "hasSelfHotReload": true,
-    "servingPort": "{{PORT_FRONTEND}}",
+    "servingPort": 8001,
     "type": "vite-hosting",
     "label": "Frontend Vite",
     "hostingDeployment": {
