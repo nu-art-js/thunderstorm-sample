@@ -6,3 +6,4 @@
 [submodule "_thunderstorm"]
 	path = _thunderstorm
 	url = git@github.com:nu-art-js/thunderstorm.git
+	branch = main

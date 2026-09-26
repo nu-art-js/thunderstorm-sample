@@ -64,7 +64,7 @@
       "PORT_FRONTEND": 8001,
       "PORT_BACKEND_APEX": 8002,
       "PORT_CONFIG": 8004,
-      "PORT_MONGO": 27018,
+      "PORT_MONGO": 28000,
       "FIREBASE_PROJECT_LOCAL": "demo-project",
       "ARTIFACT_PROJECT_ID": "replace-artifact-project",
       "ARTIFACT_REGION": "us-central1"

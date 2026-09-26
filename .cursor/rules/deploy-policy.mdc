@@ -33,4 +33,4 @@ Module config that must land in RTDB goes in `releases/<semver>.json` (`default`
 
 ## Fill before the first real deploy
 
-`bai-config.json` `ARTIFACT_PROJECT_ID`, plus `containerDeployment.imageName` and `hostingDeployment.packageName`, and the `replace-dev` / `replace-staging` / `replace-prod` project ids in the app `__package.json` files. Until those are real, deploy will fail closed.
+`containerDeployment` / `hostingDeployment` artifact project and region in the app `__package.json` files (mirrored by `bai-config.json` `ARTIFACT_PROJECT_ID` and `ARTIFACT_REGION`), plus `imageName` and `packageName`, and the `replace-dev` / `replace-staging` / `replace-prod` project ids. Until those are real, deploy will fail closed.

@@ -47,7 +47,7 @@ Never `bai -i -up=<subset>` — that rewrites a broken `pnpm-workspace.yaml`.
 docker info   # must succeed before launch or e2e
 ```
 
-Human ports are listed in [`bai-config.json`](bai-config.json) `templateParams.params` and as matching literals in the app `__package.json` files (backend **8002**, frontend **8001**, mongo **27018**). E2E uses a dedicated zone: backend **8102**, mongo **27039**.
+Human ports are the literals in the app `__package.json` files (backend **8002**, frontend **8001**, mongo **28000**). [`bai-config.json`](bai-config.json) `templateParams.params` mirrors them. E2E uses a dedicated zone: backend **8102**, mongo **28021**. `node scripts/preflight-unit-config.mjs` checks those values against the installed BAI package.
 
 ## GCP / JWT secrets
 

@@ -98,7 +98,7 @@
     "sslKey": "../../.config/.ssl/localhost.key",
     "sslCert": "../../.config/.ssl/localhost.crt",
     "mongo": {
-      "port": 27018
+      "port": 28000
     },
     "containerDeployment": {
       "artifactRegistry": {

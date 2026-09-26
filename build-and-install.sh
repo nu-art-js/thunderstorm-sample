@@ -29,5 +29,11 @@ if [[ -z "${TS_VERSION:-}" && -f "${_bai_pin_file}" ]]; then
 	fi
 fi
 
+# Once published BAI is on disk, reject unitConfig the installed package will not accept
+# before starting another pipeline. The first init has no node_modules yet, so it skips.
+if [[ -f "${_bai_dir}/node_modules/@nu-art/build-and-install/package.json" ]]; then
+	node "${_bai_dir}/scripts/preflight-unit-config.mjs" || exit $?
+fi
+
 bash <(curl -fsSL https://github.com/nu-art/bash-tools/releases/latest/download/bundle.loader.sh) --sh-repo nu-art-js/build-and-install-script --sh-bundle bai "${_bai_extra[@]}" "$@"
 #bash /Users/tacb0ss/dev/nu-art/build-and-install-script/dist/bundle.bai.sh "${_bai_extra[@]}" "$@"
