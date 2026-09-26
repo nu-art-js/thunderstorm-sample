@@ -52,18 +52,18 @@
     "label": "Frontend Vite",
     "hostingDeployment": {
       "artifactRegistry": {
-        "region": "{{ARTIFACT_REGION}}",
+        "region": "us-central1",
         "repository": "hosting-builds",
-        "projectId": "{{ARTIFACT_PROJECT_ID}}"
+        "projectId": "replace-artifact-project"
       },
       "packageName": "app-frontend"
     },
     "envs": {
       "local": {
         "config": {
-          "configUrl": "http://127.0.0.1:{{PORT_CONFIG}}/_config/frontend/manager.json?ns={{FIREBASE_PROJECT_LOCAL}}-default-rtdb"
+          "configUrl": "http://127.0.0.1:8004/_config/frontend/manager.json?ns=demo-project-default-rtdb"
         },
-        "projectId": "{{FIREBASE_PROJECT_LOCAL}}"
+        "projectId": "demo-project"
       },
       "dev": {
         "config": {

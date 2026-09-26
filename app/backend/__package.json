@@ -102,15 +102,15 @@
     },
     "containerDeployment": {
       "artifactRegistry": {
-        "region": "{{ARTIFACT_REGION}}",
+        "region": "us-central1",
         "repository": "web-apps",
-        "projectId": "{{ARTIFACT_PROJECT_ID}}"
+        "projectId": "replace-artifact-project"
       },
       "imageName": "app-backend"
     },
     "envs": {
       "local": {
-        "projectId": "{{FIREBASE_PROJECT_LOCAL}}"
+        "projectId": "demo-project"
       },
       "dev": {
         "projectId": "replace-dev"
