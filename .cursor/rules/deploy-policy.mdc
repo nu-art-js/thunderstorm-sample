@@ -35,4 +35,4 @@ Module config that must land in RTDB goes in `releases/<semver>.json` (`default`
 
 `containerDeployment` / `hostingDeployment` artifact project and region in the app `__package.json` files (mirrored by `bai-config.json` `ARTIFACT_PROJECT_ID` and `ARTIFACT_REGION`), plus `imageName` and `packageName`, and the `replace-dev` / `replace-staging` / `replace-prod` project ids. Until those are real, deploy will fail closed.
 
-The staging deploy **service account lives in GCP**. Create it with `bash scripts/create-staging-deploy-sa.sh <slug> <staging-project-id>`. The JSON key is written to `$HOME/.config/gcloud/<slug>-staging-deploy.json` only. Never commit it. `gcloud builds submit` needs `roles/storage.admin` on `gs://nu-art-dev-ops_cloudbuild` and `roles/serviceusage.serviceUsageConsumer` on `nu-art-dev-ops`.
+The staging deploy **service account lives in GCP**. Create it with the bootstrap skill's `create-staging-deploy-sa.sh` (not a copy in this repo). The JSON key is written to `$HOME/.config/gcloud/<slug>-staging-deploy.json` only. Never commit it.

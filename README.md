@@ -49,7 +49,7 @@ docker info   # must succeed before launch or e2e
 
 ## Host tools
 
-BAI needs **`cpio`** and **`rsync`** on the machine. `cpio` copies SCSS and other assets into `dist`. `rsync` copies dependency output for the backend image. macOS includes both. On Debian/Ubuntu, including a Cursor Cloud image:
+BAI needs **`cpio`** and **`rsync`** on the machine. `cpio` copies SCSS and other assets into `dist`. `rsync` copies dependency output for the backend image. macOS includes both. On Debian/Ubuntu:
 
 ```bash
 apt-get install -y cpio rsync
