@@ -5,34 +5,104 @@ set -e
 # to reauth. BAI's commando inherits this process env — so bootstrap HERE,
 # do not rely on the caller (or the chat) to export anything.
 #
-# Required on this machine:
-#   PATH must include $HOME/google-cloud-sdk/bin (gcloud is not on /opt/homebrew/bin)
-#   CLOUDSDK_CORE_DISABLE_PROMPTS=1
-#   If `gcloud auth print-access-token` fails (expired user token), set
-#   CLOUDSDK_AUTH_ACCESS_TOKEN from `gcloud auth application-default print-access-token`
-#   Firebase Hosting must use the ADC json (GOOGLE_APPLICATION_CREDENTIALS).
-#   A gcloud user access token in FIREBASE_TOKEN cannot list the Firebase
-#   project, and that var beats ADC — so unset it whenever the ADC json exists.
-#   Fall back to FIREBASE_TOKEN only when there is no ADC file.
-# Optional: CLOUDSDK_CORE_ACCOUNT when several accounts are logged in.
-# Never `gcloud config set`.
+# Auth order:
+#   1. Cursor secret: STAGING_DEPLOY_SA_JSON, or any *_STAGING_DEPLOY_SA_JSON
+#      (Identity: IDENTITY_SYNCER_STAGING_DEPLOY_SA_JSON). Written under $HOME.
+#   2. Existing GOOGLE_APPLICATION_CREDENTIALS file
+#   3. $HOME/.config/gcloud/*-staging-deploy.json
+#   4. User ADC / gcloud user token
+# Never write a key inside the git worktree. Never `gcloud config set`.
+# gcloud CLI does not use GAC by itself — service-account keys must be activated.
+
+cred_type() {
+	python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("type",""))' "$1" 2>/dev/null || true
+}
+
+# Prints JSON to stdout for the caller to write. Do not echo this to the terminal.
+sa_json_from_env() {
+	if [ -n "${STAGING_DEPLOY_SA_JSON:-}" ]; then
+		printf '%s' "$STAGING_DEPLOY_SA_JSON"
+		return
+	fi
+	local name
+	for name in $(compgen -e); do
+		case "$name" in
+			*_STAGING_DEPLOY_SA_JSON)
+				if [ -n "${!name}" ]; then
+					printf '%s' "${!name}"
+					return
+				fi
+				;;
+		esac
+	done
+}
+
+# Prints a key path or nothing. Does not print JSON.
+resolve_sa_key() {
+	local repo_root dest json
+	repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	dest="${HOME}/.config/gcloud/staging-deploy-sa.json"
+	json="$(sa_json_from_env)"
+
+	if [ -n "$json" ]; then
+		case "$dest" in
+			"$repo_root"/*)
+				echo "Refusing to write a service-account key inside the repo: $dest" >&2
+				exit 1
+				;;
+		esac
+		mkdir -p "$(dirname "$dest")"
+		umask 077
+		printf '%s' "$json" > "$dest"
+		chmod 600 "$dest"
+		echo "$dest"
+		return
+	fi
+
+	if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] && [ -f "${GOOGLE_APPLICATION_CREDENTIALS}" ]; then
+		echo "${GOOGLE_APPLICATION_CREDENTIALS}"
+		return
+	fi
+
+	shopt -s nullglob
+	local keys=("${HOME}"/.config/gcloud/*-staging-deploy.json)
+	shopt -u nullglob
+	if [ ${#keys[@]} -gt 0 ]; then
+		echo "${keys[0]}"
+	fi
+}
 
 ensure_gcloud() {
 	export PATH="${HOME}/google-cloud-sdk/bin:/opt/homebrew/share/google-cloud-sdk/bin:/opt/homebrew/bin:/usr/local/bin:${PATH}"
 	export CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
-	local adc_json="${HOME}/.config/gcloud/application_default_credentials.json"
-	if [ -f "$adc_json" ]; then
+	local key adc_json token
+	key="$(resolve_sa_key)"
+	adc_json="${HOME}/.config/gcloud/application_default_credentials.json"
+
+	if [ -n "$key" ]; then
+		export GOOGLE_APPLICATION_CREDENTIALS="$key"
+		unset FIREBASE_TOKEN
+	elif [ -f "$adc_json" ]; then
 		export GOOGLE_APPLICATION_CREDENTIALS="$adc_json"
 		unset FIREBASE_TOKEN
 	fi
 
 	if ! command -v gcloud >/dev/null 2>&1; then
-		echo "gcloud not on PATH after adding \$HOME/google-cloud-sdk/bin. Install the Cloud SDK or add it to PATH."
+		echo "gcloud is not installed. Cloud Agents: install google-cloud-cli in this product's Cloud install hook. Laptop: install the Cloud SDK."
 		exit 1
 	fi
 
-	local token
+	if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] && [ "$(cred_type "$GOOGLE_APPLICATION_CREDENTIALS")" = "service_account" ]; then
+		gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS" --quiet
+		if token=$(gcloud auth print-access-token 2>/dev/null) && [ -n "$token" ]; then
+			echo "gcloud: using staging deploy service account ($(command -v gcloud))"
+			return
+		fi
+		echo "gcloud: service-account key is present but did not yield a token."
+		exit 1
+	fi
+
 	if token=$(gcloud auth print-access-token 2>/dev/null) && [ -n "$token" ]; then
 		if [ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
 			export FIREBASE_TOKEN="$token"
@@ -52,9 +122,7 @@ ensure_gcloud() {
 		return
 	fi
 
-	echo "gcloud cannot get a token (user expired, ADC missing). Run:"
-	echo "  gcloud auth login"
-	echo "  gcloud auth application-default login"
+	echo "gcloud cannot get a token. Cloud Agents need Cursor secret <SLUG>_STAGING_DEPLOY_SA_JSON (Identity: IDENTITY_SYNCER_STAGING_DEPLOY_SA_JSON). Laptop: gcloud auth login && gcloud auth application-default login."
 	exit 1
 }
 
