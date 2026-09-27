@@ -22,7 +22,7 @@ alwaysApply: true
 - BAI is the only way to do anything in this repo, and unless explicitly specified never use pnpm.
 - BAI is a CLI tool; it is **not** run via pnpm. Invoke it independently. See **build-and-install rules** for how to run it.
 - Always go through this repo’s `build-and-install.sh`. It injects `--ts-version` from `version-thunderstorm.json` (0.500.x). Upstream BAI defaults to `~0.401.0`. After init, `node_modules/@nu-art/build-and-install` must be 0.500.x; if it is 0.401.x, re-init with `--ts-version=<pin>` from that JSON file.
-- `_thunderstorm` is a submodule — `git submodule update --init --recursive` before any BAI command.
+- `_thunderstorm` is a submodule — `git submodule update --init --recursive` before any BAI command. Cloud Agents: `.cursor/cloud-start.sh` does that (HTTPS rewrite of `git@` URLs) before the prompt. Do not clone the submodule in the agent turn unless `_thunderstorm` is still empty.
 - **Docker must be running** before `bai -l` or `bai -t -tt=pure -up=@app/e2e$`.
 - **`GCP_PROJECT_ID`** must be a real GCP project before password-auth / JWT (not `demo-project` / `*-local`).
 - To build: `bai -up=<packages-regexp>` (use -up to build specific packages, otherwise it builds the entire monorepo)
@@ -38,7 +38,7 @@ These files already exist. Fill placeholders. Do not invent a second copy.
 
 - **Human ports and project ids** are literals in the app `__package.json` `unitConfig` files. `bai-config.json` `templateParams.params` is a mirror of those literals and is not substituted by published BAI 0.500.6. With base port N: debug N, frontend N+1, backend N+2, config N+4, mongo `20000+N`. `mongo` is `port` and optional `dbName` only. The listen fallback in `app/backend/src/main/index.ts` is N+2.
 - **E2E zone** (backend N+102, mongo `20000+N+21`; sample 8102 / 28021) lives only in `app/e2e/src/test/sample-e2e-harness-constants.ts`. It must not collide with the human backend port.
-- **Host tools:** `cpio` and `rsync` must be installed before BAI. `cpio` copies assets into `dist`. `rsync` copies dependency output for the backend image. A missing `cpio` is swallowed, and Vite then fails resolving `@nu-art/ts-styles`. Do not copy a Cloud Dockerfile from this sample into product repos; keep host-tool installs in the bootstrap skill / that product's own Cloud hook.
+- **Host tools:** `cpio` and `rsync` must be installed before BAI. `cpio` copies assets into `dist`. `rsync` copies dependency output for the backend image. A missing `cpio` is swallowed, and Vite then fails resolving `@nu-art/ts-styles`. Cloud Agents: `.cursor/cloud-install.sh` installs host tools, gcloud, and docker.io (no BAI init — it OOMs the Build). `.cursor/cloud-start.sh` starts the docker daemon. Cursor secret is `<SLUG>_STAGING_DEPLOY_SA_JSON`. Do not add a Dockerfile.
 - **UnitConfig preflight:** `node scripts/preflight-unit-config.mjs` checks `__package.json` against the installed `@nu-art/build-and-install`, not against `_thunderstorm`. `build-and-install.sh` runs it once that package is on disk. If BAI and the submodule disagree, trust the installed package.
 - **Deploy** only through `deploy.sh`. Do not call `--build-push-image` or `--deploy-image` yourself. Prod needs `DEPLOY_CONFIRM_PROD=yes` and an explicit user yes. Procedure: `.cursor/rules/deploy-policy.mdc`.
 - **RTDB config changes** go in `releases/<semver>.json` (`default` and/or `app` only). Do not PATCH `/_config` by hand.

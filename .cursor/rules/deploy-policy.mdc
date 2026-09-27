@@ -7,7 +7,7 @@ alwaysApply: false
 
 Ship only through `deploy.sh` at the repo root. Do not call `bai --build-push-image` or `bai --deploy-image` yourself. The script owns `-se`, the per-unit loop, the RTDB config walk, the `env/<env>` tag, and the restore to `-se=local`.
 
-Local Docker is not required. Cloud Build builds the image. `gcloud` must be authenticated. `deploy.sh` prefers the staging-deploy SA (`<SLUG>_STAGING_DEPLOY_SA_JSON` or `$HOME/.config/gcloud/*-staging-deploy.json`), then user ADC. Do not export `PATH` or run `gcloud config set` from the chat. Cloud Agents need `google-cloud-cli` in that product's install hook and the existing Cursor secret — the laptop key is not on the VM.
+Local Docker is not required for `deploy.sh`. Cloud Build builds the image. Cloud Agents still need Docker for `bai -l` / e2e: `.cursor/cloud-install.sh` installs `docker.io` and gcloud; `.cursor/cloud-start.sh` starts the daemon. `deploy.sh` prefers the staging-deploy SA (`<SLUG>_STAGING_DEPLOY_SA_JSON` or `$HOME/.config/gcloud/*-staging-deploy.json`), then user ADC. Do not export `PATH` or run `gcloud config set` from the chat. Never run `build-and-install.sh init` in the Cloud install hook — it OOMs the Build.
 
 ## Version
 
