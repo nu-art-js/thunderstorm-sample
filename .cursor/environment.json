@@ -1,0 +1,9 @@
+{
+  "$schema": "https://www.cursor.com/schemas/environment.schema.json",
+  "name": "thunderstorm-sample-dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "install": "bash .cursor/bootstrap.sh"
+}

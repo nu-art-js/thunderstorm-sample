@@ -47,6 +47,16 @@ Never `bai -i -up=<subset>` — that rewrites a broken `pnpm-workspace.yaml`.
 docker info   # must succeed before launch or e2e
 ```
 
+## Host tools
+
+BAI needs **`cpio`** and **`rsync`** on the machine. `cpio` copies SCSS and other assets into `dist`. `rsync` copies dependency output for the backend image. macOS includes both. On Debian/Ubuntu, including a Cursor Cloud image:
+
+```bash
+apt-get install -y cpio rsync
+```
+
+If `cpio` is missing, the asset copy fails silently and the Vite build reports that `@nu-art/ts-styles` has no entry.
+
 Human ports are the literals in the app `__package.json` files (backend **8002**, frontend **8001**, mongo **28000**). [`bai-config.json`](bai-config.json) `templateParams.params` mirrors them. E2E uses a dedicated zone: backend **8102**, mongo **28021**. `node scripts/preflight-unit-config.mjs` checks those values against the installed BAI package.
 
 ## GCP / JWT secrets

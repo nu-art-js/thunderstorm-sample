@@ -37,6 +37,11 @@ running-status.json
 .cursor/scratch/
 __pycache__/
 
+# Service-account keys must never be committed. create-staging-deploy-sa.sh writes under $HOME.
+**/*-staging-deploy.json
+**/*service-account*.json
+**/cursor-sa.json
+
 # Track test emulator config (bai-config paths); generic firebase.json stays ignored
 !.config/tests/firebase/firebase.json
 !.config/tests/firebase/.firebaserc
