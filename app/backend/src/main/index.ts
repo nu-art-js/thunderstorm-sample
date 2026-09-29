@@ -25,8 +25,11 @@ HttpServer.getDefault().mergeRuntimeConfig({
 	},
 });
 
+const apiFunction = new ModuleBE_ExpressFunction_Class('api', () => HttpServer.getDefault().getExpress());
+apiFunction.setDefaultConfig({options: {}});
+
 const modules: Module[] = [
-	new ModuleBE_ExpressFunction_Class('api', () => HttpServer.getDefault().getExpress()),
+	apiFunction,
 	ModuleBE_Auth,
 	Slack_ServerApiError,
 	ModuleBE_AppModule,
@@ -48,7 +51,14 @@ HttpServer.getDefault().addApiMiddleware(
 	ModuleBE_PermissionsAssert.LoadPermissionsMiddleware,
 );
 
-export const api = new Storm(Environment)
+const stormConfig = {
+	envKey: Environment.envKey,
+	pathToDefaultConfig: '/_config/default',
+	// Live planes share /_config/app; the Firebase project is the isolation.
+	pathToEnvOverrideConfig: Environment.envKey === 'local' ? Environment.pathToEnvOverrideConfig : '/_config/app',
+};
+
+export const api = new Storm(stormConfig)
 	.addModulePack(ModulePackBE_Accounts)
 	.addModulePack(ModulePackBE_PasswordAuth)
 	.addModulePack(ModulePackBE_FocusedObject)

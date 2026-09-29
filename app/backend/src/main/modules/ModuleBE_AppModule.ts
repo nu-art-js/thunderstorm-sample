@@ -8,6 +8,11 @@ type Config = {
 export class ModuleBE_AppModule_Class
 	extends Module<Config> {
 
+	constructor() {
+		super();
+		this.setDefaultConfig({httpServer: {}});
+	}
+
 	protected init() {
 		super.init();
 		HttpServer.getDefault().mergeRuntimeConfig(this.config.httpServer).init();
