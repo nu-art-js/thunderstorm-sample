@@ -11,6 +11,7 @@ import {ModuleBE_AppModule} from './modules/ModuleBE_AppModule.js';
 import {Slack_ServerApiError} from '@nu-art/slack-backend/index';
 import {ModulePackBE_FocusedObject} from '@nu-art/ts-focused-object-backend/index';
 import {ModuleBE_BaseDB} from '@nu-art/db-api-backend';
+import {ModuleBE_ExpressFunction_Class} from '@nu-art/firebase-backend';
 import type {ApiDef} from '@nu-art/api-types';
 import {OpenApis} from './auth-open-apis.js';
 
@@ -25,6 +26,7 @@ HttpServer.getDefault().mergeRuntimeConfig({
 });
 
 const modules: Module[] = [
+	new ModuleBE_ExpressFunction_Class('api', () => HttpServer.getDefault().getExpress()),
 	ModuleBE_Auth,
 	Slack_ServerApiError,
 	ModuleBE_AppModule,
@@ -46,10 +48,10 @@ HttpServer.getDefault().addApiMiddleware(
 	ModuleBE_PermissionsAssert.LoadPermissionsMiddleware,
 );
 
-new Storm(Environment)
+export const api = new Storm(Environment)
 	.addModulePack(ModulePackBE_Accounts)
 	.addModulePack(ModulePackBE_PasswordAuth)
 	.addModulePack(ModulePackBE_FocusedObject)
 	.addModulePack(ModulePackBE_Permissions)
 	.addModulePack(modules)
-	.build();
+	.build().api;
