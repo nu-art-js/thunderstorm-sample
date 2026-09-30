@@ -11,12 +11,14 @@ import {ModuleBE_AppModule} from './modules/ModuleBE_AppModule.js';
 import {Slack_ServerApiError} from '@nu-art/slack-backend/index';
 import {ModulePackBE_FocusedObject} from '@nu-art/ts-focused-object-backend/index';
 import {ModuleBE_BaseDB} from '@nu-art/db-api-backend';
-import {ModuleBE_ExpressFunction_Class} from '@nu-art/firebase-backend';
 import type {ApiDef} from '@nu-art/api-types';
 import {OpenApis} from './auth-open-apis.js';
 
+// node mode: the process is a long-running HTTP server. Locally it serves HTTPS on
+// basePort; in a container PORT is provided and TLS is terminated upstream, so SSL is left off.
+
 HttpServer.getDefault().mergeRuntimeConfig({
-	// Fallback must match basePort in app/backend/__package.json (N+2). BAI sets BACKEND_PORT from that literal.
+	// PORT = container/upstream-TLS mode (no local SSL). BACKEND_PORT = local HTTPS listen.
 	port: Number(process.env.PORT || process.env.BACKEND_PORT) || 8002,
 	bodyParserLimit: '32mb',
 	ssl: process.env.PORT ? undefined : {
@@ -25,11 +27,7 @@ HttpServer.getDefault().mergeRuntimeConfig({
 	},
 });
 
-const apiFunction = new ModuleBE_ExpressFunction_Class('api', () => HttpServer.getDefault().getExpress());
-apiFunction.setDefaultConfig({options: {}});
-
 const modules: Module[] = [
-	apiFunction,
 	ModuleBE_Auth,
 	Slack_ServerApiError,
 	ModuleBE_AppModule,
@@ -58,10 +56,10 @@ const stormConfig = {
 	pathToEnvOverrideConfig: Environment.envKey === 'local' ? Environment.pathToEnvOverrideConfig : '/_config/app',
 };
 
-export const api = new Storm(stormConfig)
+new Storm(stormConfig)
 	.addModulePack(ModulePackBE_Accounts)
 	.addModulePack(ModulePackBE_PasswordAuth)
 	.addModulePack(ModulePackBE_FocusedObject)
 	.addModulePack(ModulePackBE_Permissions)
 	.addModulePack(modules)
-	.build().api;
+	.build();
