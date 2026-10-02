@@ -63,9 +63,9 @@ If `cpio` is missing, the asset copy fails silently and the Vite build reports t
 
 Install: `cpio`, `rsync`, gcloud (`$HOME/google-cloud-sdk`), `docker.io`, and `_thunderstorm`. Do **not** run `build-and-install.sh init` there — it OOMs the Build. Agents run BAI when they need it.
 
-Start: docker daemon, submodule init (HTTPS rewrite of `git@` URLs), then ADC from Cursor secret `<SLUG>_STAGING_DEPLOY_SA_JSON`.
+Start: docker daemon, submodule init (HTTPS rewrite of `git@` URLs), then ADC from Cursor secret `GCP_SA_JSON`.
 
-Do not add a Dockerfile. The staging-deploy SA create script lives in the bootstrap skill, not in this repo.
+Do not add a Dockerfile. Create a deploy SA with `bash scripts/create-deploy-sa.sh <slug> <env>`. It prints the Cursor secret name and a `file://` link to the JSON key.
 
 Human ports are the literals in the app `__package.json` files (backend **8002**, frontend **8001**, mongo **28000**). [`bai-config.json`](bai-config.json) `templateParams.params` mirrors them. E2E uses a dedicated zone: backend **8102**, mongo **28021**. `node scripts/preflight-unit-config.mjs` checks those values against the installed BAI package.
 

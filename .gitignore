@@ -37,7 +37,8 @@ running-status.json
 .cursor/scratch/
 __pycache__/
 
-# Service-account keys must never be committed. create-staging-deploy-sa.sh writes under $HOME.
+# Service-account keys must never be committed. create-deploy-sa.sh writes under $HOME.
+**/*-*-deploy.json
 **/*-staging-deploy.json
 **/*service-account*.json
 **/cursor-sa.json

@@ -7,7 +7,7 @@ alwaysApply: false
 
 Ship only through `deploy.sh` at the repo root. Do not call `bai --build-push-image` or `bai --deploy-image` yourself. The script owns `-se`, the per-unit loop, the RTDB config walk, the `env/<env>` tag, and the restore to `-se=local`.
 
-Local Docker is not required for `deploy.sh`. Cloud Build builds the image. Cloud Agents still need Docker for `bai -l` / e2e: `.cursor/cloud-install.sh` installs `docker.io` and gcloud; `.cursor/cloud-start.sh` starts the daemon. `deploy.sh` prefers the staging-deploy SA (`<SLUG>_STAGING_DEPLOY_SA_JSON` or `$HOME/.config/gcloud/*-staging-deploy.json`), then user ADC. Do not export `PATH` or run `gcloud config set` from the chat. Never run `build-and-install.sh init` in the Cloud install hook — it OOMs the Build.
+Local Docker is not required for `deploy.sh`. Cloud Build builds the image. Cloud Agents still need Docker for `bai -l` / e2e: `.cursor/cloud-install.sh` installs `docker.io` and gcloud; `.cursor/cloud-start.sh` starts the daemon. `deploy.sh` prefers the deploy SA (`GCP_SA_JSON` or `$HOME/.config/gcloud/<slug>-<env>-deploy.json`), then user ADC. Do not export `PATH` or run `gcloud config set` from the chat. Never run `build-and-install.sh init` in the Cloud install hook — it OOMs the Build.
 
 ## Version
 
@@ -35,4 +35,4 @@ Module config that must land in RTDB goes in `releases/<semver>.json` (`default`
 
 `containerDeployment` / `hostingDeployment` artifact project and region in the app `__package.json` files (mirrored by `bai-config.json` `ARTIFACT_PROJECT_ID` and `ARTIFACT_REGION`), plus `imageName` and `packageName`, and the `replace-dev` / `replace-staging` / `replace-prod` project ids. Until those are real, deploy will fail closed.
 
-The staging deploy **service account lives in GCP**. Create it with the bootstrap skill's `create-staging-deploy-sa.sh` (not a copy in this repo). The JSON key is written to `$HOME/.config/gcloud/<slug>-staging-deploy.json` only. Never commit it. Cloud Agents use Cursor secret `<SLUG>_STAGING_DEPLOY_SA_JSON` (the file contents).
+The per-env deploy **service account lives in GCP**. Create it with `bash scripts/create-deploy-sa.sh <slug> <env>` from this repo. The JSON key is written to `$HOME/.config/gcloud/<slug>-<env>-deploy.json` only. Never commit it. Cloud Agents use Cursor secret `GCP_SA_JSON` (the file contents). The script prints that name and a `file://` link to the key.

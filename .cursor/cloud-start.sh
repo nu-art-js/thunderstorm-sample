@@ -33,15 +33,10 @@ fi
 # not in the agent turn. HTTPS so the GitHub App token can fetch git@ submodules.
 git -c url.https://github.com/.insteadOf=git@github.com: submodule update --init --recursive
 
-# Cursor secret STAGING_DEPLOY_SA_JSON or <SLUG>_STAGING_DEPLOY_SA_JSON.
+# Cursor secret GCP_SA_JSON.
 python3 - "${HOME}/.config/gcloud/application_default_credentials.json" <<'PY'
 import json, os, pathlib, stat, sys
-raw = os.environ.get("STAGING_DEPLOY_SA_JSON") or ""
-if not raw:
-	for key, value in os.environ.items():
-		if key.endswith("_STAGING_DEPLOY_SA_JSON") and value:
-			raw = value
-			break
+raw = os.environ.get("GCP_SA_JSON") or ""
 if not raw:
 	raise SystemExit(0)
 json.loads(raw)

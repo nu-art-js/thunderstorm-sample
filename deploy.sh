@@ -6,10 +6,9 @@ set -e
 # do not rely on the caller (or the chat) to export anything.
 #
 # Auth order:
-#   1. Cursor secret: STAGING_DEPLOY_SA_JSON, or any *_STAGING_DEPLOY_SA_JSON
-#      (Identity: IDENTITY_SYNCER_STAGING_DEPLOY_SA_JSON). Written under $HOME.
+#   1. Cursor secret: GCP_SA_JSON
 #   2. Existing GOOGLE_APPLICATION_CREDENTIALS file
-#   3. $HOME/.config/gcloud/*-staging-deploy.json
+#   3. $HOME/.config/gcloud/<slug>-<env>-deploy.json
 #   4. User ADC / gcloud user token
 # Never write a key inside the git worktree. Never `gcloud config set`.
 # gcloud CLI does not use GAC by itself — service-account keys must be activated.
@@ -20,21 +19,10 @@ cred_type() {
 
 # Prints JSON to stdout for the caller to write. Do not echo this to the terminal.
 sa_json_from_env() {
-	if [ -n "${STAGING_DEPLOY_SA_JSON:-}" ]; then
-		printf '%s' "$STAGING_DEPLOY_SA_JSON"
+	if [ -n "${GCP_SA_JSON:-}" ]; then
+		printf '%s' "$GCP_SA_JSON"
 		return
 	fi
-	local name
-	for name in $(compgen -e); do
-		case "$name" in
-			*_STAGING_DEPLOY_SA_JSON)
-				if [ -n "${!name}" ]; then
-					printf '%s' "${!name}"
-					return
-				fi
-				;;
-		esac
-	done
 }
 
 # Prints a key path or nothing. Does not print JSON.
@@ -65,7 +53,7 @@ resolve_sa_key() {
 	fi
 
 	shopt -s nullglob
-	local keys=("${HOME}"/.config/gcloud/*-staging-deploy.json)
+	local keys=("${HOME}"/.config/gcloud/*-*-deploy.json "${HOME}"/.config/gcloud/*-staging-deploy.json)
 	shopt -u nullglob
 	if [ ${#keys[@]} -gt 0 ]; then
 		echo "${keys[0]}"
@@ -122,7 +110,7 @@ ensure_gcloud() {
 		return
 	fi
 
-	echo "gcloud cannot get a token. Cloud Agents need Cursor secret <SLUG>_STAGING_DEPLOY_SA_JSON (Identity: IDENTITY_SYNCER_STAGING_DEPLOY_SA_JSON). Laptop: gcloud auth login && gcloud auth application-default login."
+	echo "gcloud cannot get a token. Cloud Agents need Cursor secret GCP_SA_JSON. Laptop: gcloud auth login && gcloud auth application-default login."
 	exit 1
 }
 
