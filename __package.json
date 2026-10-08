@@ -8,9 +8,9 @@
   },
   "devDependencies": {
     "tsx": "^4.20.5",
-    "@types/chai": "^4.3.4",
-    "@types/chai-as-promised": "^7.1.5",
-    "@types/mocha": "^10.0.1",
+    "@types/chai": "?",
+    "@types/chai-as-promised": "?",
+    "@types/mocha": "?",
     "@types/node": "?",
     "@types/estree": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "?",
@@ -25,19 +25,20 @@
     "firebase-admin": "?",
     "firebase-functions": "?",
     "google-auth-library": "?",
-    "chai": "^4.3.7",
-    "chai-as-promised": "^7.1.1",
+    "chai": "?",
+    "chai-as-promised": "?",
     "eslint": "?",
-    "mocha": "^10.2.0",
-    "ts-mocha": "^10.0.0",
+    "mocha": "?",
+    "ts-mocha": "?",
     "typedoc": "^0.23.28",
     "typescript": "?",
+    "@typescript/native": "?",
     "use-strict": "^1.0.1",
     "tsc-watch": "^6.0.0",
     "plop": "^4.0.1",
     "node-plop": "^0.32.0",
     "inquirer": "^12.5.2",
-    "undici-types": "^7.8.0",
+    "undici-types": "~8.9.0",
     "firebase-tools": "?",
     "ts-node": "latest",
     "google-gax": "5.0.1",
@@ -55,7 +56,7 @@
     }
   },
   "engines": {
-    "node": "22"
+    "node": "26"
   },
   "unitConfig": {
     "type": "node-project"

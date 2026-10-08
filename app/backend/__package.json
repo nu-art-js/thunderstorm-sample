@@ -74,7 +74,7 @@
     "firebase-functions-test": "^0.2.3"
   },
   "engines": {
-    "node": "22"
+    "node": "26"
   },
   "unitConfig": {
     "runtime": "node",
