@@ -91,7 +91,7 @@
     "typescript": {
       "tsConfig": {
         "main": "./.config/tsconfig-main.json",
-        "test": "./.config/tsconfig-main.json",
+        "test": "./.config/tsconfig-test.json",
         "sw": "./.config/tsconfig-sw.json"
       }
     },
