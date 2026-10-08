@@ -54,6 +54,8 @@ fi
 if [[ -z "$DEVOPS_PROJECT" ]]; then
 	DEVOPS_PROJECT="$(python3 -c "import json; print(json.load(open('$BACKEND_PKG'))['unitConfig']['containerDeployment']['artifactRegistry']['projectId'])")"
 fi
+REGION="$(python3 -c "import json; print(json.load(open('$BACKEND_PKG'))['unitConfig']['containerDeployment']['artifactRegistry']['region'])")"
+[[ -n "$REGION" ]] || die "containerDeployment.artifactRegistry.region is empty"
 
 [[ "$TARGET_PROJECT" != replace-* && "$TARGET_PROJECT" != demo-project ]] \
 	|| die "$ENV projectId is still a placeholder: $TARGET_PROJECT — fill app/backend/__package.json first"
@@ -72,7 +74,7 @@ TOKEN="$(gcloud auth print-access-token 2>/dev/null || true)"
 export CLOUDSDK_AUTH_ACCESS_TOKEN="$TOKEN"
 
 echo "gcloud account: $ACCOUNT"
-echo "env: $ENV  project: $TARGET_PROJECT"
+echo "env: $ENV  project: $TARGET_PROJECT  region: $REGION"
 
 gcloud projects describe "$TARGET_PROJECT" --format='value(projectId)' >/dev/null \
 	|| die "no access to $ENV project $TARGET_PROJECT"
@@ -159,10 +161,10 @@ gcloud services enable \
 	--project="$TARGET_PROJECT"
 
 echo "asserting Artifact Registry repos and Cloud Build bucket…"
-gcloud artifacts repositories describe web-apps --project="$DEVOPS_PROJECT" --location=us-central1 >/dev/null \
-	|| die "missing Artifact Registry repo web-apps in $DEVOPS_PROJECT (us-central1)"
-gcloud artifacts repositories describe hosting-builds --project="$DEVOPS_PROJECT" --location=us-central1 >/dev/null \
-	|| die "missing Artifact Registry repo hosting-builds in $DEVOPS_PROJECT (us-central1)"
+gcloud artifacts repositories describe web-apps --project="$DEVOPS_PROJECT" --location="$REGION" >/dev/null \
+	|| die "missing Artifact Registry repo web-apps in $DEVOPS_PROJECT ($REGION)"
+gcloud artifacts repositories describe hosting-builds --project="$DEVOPS_PROJECT" --location="$REGION" >/dev/null \
+	|| die "missing Artifact Registry repo hosting-builds in $DEVOPS_PROJECT ($REGION)"
 gcloud storage buckets describe "gs://${DEVOPS_PROJECT}_cloudbuild" >/dev/null \
 	|| die "missing Cloud Build bucket gs://${DEVOPS_PROJECT}_cloudbuild"
 
@@ -181,12 +183,12 @@ gcloud projects add-iam-policy-binding "$DEVOPS_PROJECT" --member="serviceAccoun
 gcloud projects add-iam-policy-binding "$DEVOPS_PROJECT" --member="serviceAccount:${SA_EMAIL}" --role="roles/cloudbuild.builds.builder" --condition=None >/dev/null
 gcloud projects add-iam-policy-binding "$DEVOPS_PROJECT" --member="serviceAccount:${SA_EMAIL}" --role="roles/serviceusage.serviceUsageConsumer" --condition=None >/dev/null
 gcloud iam service-accounts add-iam-policy-binding "$CB_RUNTIME" --project="$DEVOPS_PROJECT" --member="serviceAccount:${SA_EMAIL}" --role="roles/iam.serviceAccountUser" >/dev/null
-gcloud artifacts repositories add-iam-policy-binding web-apps --project="$DEVOPS_PROJECT" --location=us-central1 --member="serviceAccount:${SA_EMAIL}" --role="roles/artifactregistry.writer" >/dev/null
-gcloud artifacts repositories add-iam-policy-binding hosting-builds --project="$DEVOPS_PROJECT" --location=us-central1 --member="serviceAccount:${SA_EMAIL}" --role="roles/artifactregistry.writer" >/dev/null
+gcloud artifacts repositories add-iam-policy-binding web-apps --project="$DEVOPS_PROJECT" --location="$REGION" --member="serviceAccount:${SA_EMAIL}" --role="roles/artifactregistry.writer" >/dev/null
+gcloud artifacts repositories add-iam-policy-binding hosting-builds --project="$DEVOPS_PROJECT" --location="$REGION" --member="serviceAccount:${SA_EMAIL}" --role="roles/artifactregistry.writer" >/dev/null
 gcloud storage buckets add-iam-policy-binding "gs://${DEVOPS_PROJECT}_cloudbuild" --member="serviceAccount:${SA_EMAIL}" --role="roles/storage.admin" >/dev/null
 gcloud storage buckets add-iam-policy-binding "gs://${DEVOPS_PROJECT}_cloudbuild" --member="serviceAccount:${CB_RUNTIME}" --role="roles/storage.admin" >/dev/null
-gcloud artifacts repositories add-iam-policy-binding web-apps --project="$DEVOPS_PROJECT" --location=us-central1 --member="serviceAccount:${CB_RUNTIME}" --role="roles/artifactregistry.writer" >/dev/null
-gcloud artifacts repositories add-iam-policy-binding web-apps --project="$DEVOPS_PROJECT" --location=us-central1 --member="serviceAccount:${RUN_AGENT}" --role="roles/artifactregistry.reader" >/dev/null
+gcloud artifacts repositories add-iam-policy-binding web-apps --project="$DEVOPS_PROJECT" --location="$REGION" --member="serviceAccount:${CB_RUNTIME}" --role="roles/artifactregistry.writer" >/dev/null
+gcloud artifacts repositories add-iam-policy-binding web-apps --project="$DEVOPS_PROJECT" --location="$REGION" --member="serviceAccount:${RUN_AGENT}" --role="roles/artifactregistry.reader" >/dev/null
 
 gcloud projects add-iam-policy-binding "$TARGET_PROJECT" --member="serviceAccount:${SA_EMAIL}" --role="roles/run.admin" --condition=None >/dev/null
 gcloud projects add-iam-policy-binding "$TARGET_PROJECT" --member="serviceAccount:${SA_EMAIL}" --role="roles/logging.viewer" --condition=None >/dev/null

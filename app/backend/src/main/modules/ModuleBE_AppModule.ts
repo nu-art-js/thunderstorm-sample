@@ -2,7 +2,7 @@ import {Module} from '@nu-art/ts-common';
 import {HttpServer, HttpServerConfig} from '@nu-art/http-server';
 
 type Config = {
-	httpServer: HttpServerConfig
+	httpServer?: Partial<HttpServerConfig>
 }
 
 export class ModuleBE_AppModule_Class
