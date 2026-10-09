@@ -52,7 +52,7 @@ function fail(message) {
 
 function walkPackages(dir, out = []) {
 	for (const name of readdirSync(dir)) {
-		if (name === 'node_modules' || name === '_thunderstorm' || name === 'dist' || name === '.git')
+		if (name === 'node_modules' || name === '_thunderstorm' || name === 'dist' || name === '.git' || name === '.trash')
 			continue;
 		const path = join(dir, name);
 		if (statSync(path).isDirectory())

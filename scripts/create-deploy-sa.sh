@@ -171,7 +171,7 @@ gcloud storage buckets describe "gs://${DEVOPS_PROJECT}_cloudbuild" >/dev/null \
 	|| die "missing Cloud Build bucket gs://${DEVOPS_PROJECT}_cloudbuild"
 
 if ! gcloud iam service-accounts describe "$SA_EMAIL" --project="$DEVOPS_PROJECT" >/dev/null 2>&1; then
-	echo "creating $SA_EMAIL…"
+	echo "creating ${SA_EMAIL}…"
 	gcloud iam service-accounts create "$SA_ID" \
 		--project="$DEVOPS_PROJECT" \
 		--display-name="${SLUG} ${ENV} deploy" \
