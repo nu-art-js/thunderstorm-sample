@@ -292,15 +292,18 @@ def backend_target(repo: Path, env: str) -> tuple[str, str, str, str, str]:
 	first = functions[0]
 	name = first['name'] if isinstance(first, dict) else first
 	service = str(name).replace('_', '-')
-	registry = (unit.get('containerDeployment') or {}).get('artifactRegistry') or {}
-	region = registry.get('region')
-	image = (unit.get('containerDeployment') or {}).get('imageName')
+	container = unit.get('containerDeployment') or {}
+	registry = container.get('artifactRegistry') or {}
+	image_region = registry.get('region')
+	# Cloud Run lookups use the run region; BAI falls back to the image region when runRegion is unset
+	run_region = container.get('runRegion') or image_region
+	image = container.get('imageName')
 	registry_project = registry.get('projectId')
 	repository = registry.get('repository')
-	if not region or not image or not registry_project or not repository:
+	if not image_region or not image or not registry_project or not repository:
 		raise WalkError('backend containerDeployment is missing region, imageName, or artifact registry')
-	image_uri = f'{region}-docker.pkg.dev/{registry_project}/{repository}/{image}'
-	return env_cfg['projectId'], region, service, image, image_uri
+	image_uri = f'{image_region}-docker.pkg.dev/{registry_project}/{repository}/{image}'
+	return env_cfg['projectId'], run_region, service, image, image_uri
 
 
 def gcloud_json(args: list[str]) -> dict[str, Any]:

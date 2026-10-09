@@ -52,7 +52,7 @@ function fail(message) {
 
 function walkPackages(dir, out = []) {
 	for (const name of readdirSync(dir)) {
-		if (name === 'node_modules' || name === '_thunderstorm' || name === 'dist' || name === '.git')
+		if (name === 'node_modules' || name === '_thunderstorm' || name === 'dist' || name === '.git' || name === '.trash')
 			continue;
 		const path = join(dir, name);
 		if (statSync(path).isDirectory())
@@ -110,6 +110,8 @@ function readPkg(relativePath) {
 	return JSON.parse(readFileSync(path, 'utf8'));
 }
 
+const gcpRegion = /^[a-z]+-[a-z]+[0-9]+$/;
+
 const backend = readPkg('app/backend/__package.json');
 if (backend) {
 	const unit = backend.unitConfig;
@@ -130,7 +132,15 @@ if (backend) {
 	if (registry?.projectId !== params.ARTIFACT_PROJECT_ID)
 		fail(`app/backend artifact projectId != ARTIFACT_PROJECT_ID`);
 	if (registry?.region !== params.ARTIFACT_REGION)
-		fail(`app/backend artifact region != ARTIFACT_REGION`);
+		fail(`app/backend image region (containerDeployment.artifactRegistry.region) ${registry?.region} != ARTIFACT_REGION ${params.ARTIFACT_REGION}`);
+	// Cloud Run region is separate from the image region; BAI falls back to the image region when runRegion is unset
+	const runRegion = unit.containerDeployment?.runRegion ?? registry?.region;
+	if (!params.RUN_REGION)
+		fail(`bai-config.json templateParams.params.RUN_REGION is missing`);
+	else if (!gcpRegion.test(params.RUN_REGION))
+		fail(`bai-config.json RUN_REGION ${params.RUN_REGION} is not a GCP region (e.g. europe-west1)`);
+	if (runRegion !== params.RUN_REGION)
+		fail(`app/backend Cloud Run region (containerDeployment.runRegion) ${runRegion} != RUN_REGION ${params.RUN_REGION}`);
 }
 
 const frontend = readPkg('app/frontend-vite/__package.json');

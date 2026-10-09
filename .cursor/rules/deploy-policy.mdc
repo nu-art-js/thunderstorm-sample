@@ -33,6 +33,6 @@ Module config that must land in RTDB goes in `releases/<semver>.json` (`default`
 
 ## Fill before the first real deploy
 
-`containerDeployment` / `hostingDeployment` artifact project and region in the app `__package.json` files (mirrored by `bai-config.json` `ARTIFACT_PROJECT_ID` and `ARTIFACT_REGION`), plus `imageName` and `packageName`, and the `replace-dev` / `replace-staging` / `replace-prod` project ids. Until those are real, deploy will fail closed.
+`containerDeployment` / `hostingDeployment` artifact project and image region in the app `__package.json` files (mirrored by `bai-config.json` `ARTIFACT_PROJECT_ID` and `ARTIFACT_REGION`), the backend Cloud Run region `containerDeployment.runRegion` (mirrored by `RUN_REGION`; may differ from the image region), plus `imageName` and `packageName`, and the `replace-dev` / `replace-staging` / `replace-prod` project ids. Until those are real, deploy will fail closed.
 
 The per-env deploy **service account lives in GCP**. Create it with `bash scripts/create-deploy-sa.sh <slug> <env>` from this repo. The JSON key is written to `$HOME/.config/gcloud/<slug>-<env>-deploy.json` only. Never commit it. Cloud Agents use Cursor secret `GCP_SA_JSON` (the file contents). The script prints that name and a `file://` link to the key.
