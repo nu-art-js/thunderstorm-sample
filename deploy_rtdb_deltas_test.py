@@ -13,6 +13,7 @@ import deploy_rtdb_deltas as walklib
 from deploy_rtdb_deltas import (
 	MemoryRtdb,
 	WalkError,
+	backend_target,
 	container_image,
 	flatten,
 	image_matches,
@@ -24,6 +25,45 @@ from deploy_rtdb_deltas import (
 	walk,
 )
 
+
+
+def _write_backend_pkg(repo: Path, container: dict) -> None:
+	pkg = {'unitConfig': {
+		'envs': {'staging': {'projectId': 'booking-staging'}},
+		'functions': [{'name': 'api_v1'}],
+		'containerDeployment': container,
+	}}
+	(repo / 'app' / 'backend').mkdir(parents=True)
+	(repo / 'app' / 'backend' / 'package.json').write_text(json.dumps(pkg))
+
+
+class BackendTargetRegionTest(unittest.TestCase):
+
+	def _target(self, container: dict):
+		with tempfile.TemporaryDirectory() as tmp:
+			repo = Path(tmp)
+			_write_backend_pkg(repo, container)
+			return backend_target(repo, 'staging')
+
+	def test_cloud_run_lookups_use_run_region_and_image_keeps_image_region(self) -> None:
+		project, region, service, image, image_uri = self._target({
+			'artifactRegistry': {'region': 'us-central1', 'repository': 'web-apps', 'projectId': 'images-proj'},
+			'runRegion': 'europe-west1',
+			'imageName': 'booking-backend',
+		})
+		self.assertEqual(project, 'booking-staging')
+		self.assertEqual(region, 'europe-west1')
+		self.assertEqual(service, 'api-v1')
+		self.assertEqual(image, 'booking-backend')
+		self.assertEqual(image_uri, 'us-central1-docker.pkg.dev/images-proj/web-apps/booking-backend')
+
+	def test_run_region_falls_back_to_image_region(self) -> None:
+		_, region, _, _, image_uri = self._target({
+			'artifactRegistry': {'region': 'us-central1', 'repository': 'web-apps', 'projectId': 'images-proj'},
+			'imageName': 'booking-backend',
+		})
+		self.assertEqual(region, 'us-central1')
+		self.assertTrue(image_uri.startswith('us-central1-docker.pkg.dev/'))
 
 class VersionsInRangeTest(unittest.TestCase):
 	def test_open_start_inclusive_target_semver_order(self) -> None:

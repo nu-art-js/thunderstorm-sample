@@ -72,7 +72,8 @@
       "PORT_MONGO": 28000,
       "FIREBASE_PROJECT_LOCAL": "demo-project",
       "ARTIFACT_PROJECT_ID": "replace-artifact-project",
-      "ARTIFACT_REGION": "us-central1"
+      "ARTIFACT_REGION": "us-central1",
+      "RUN_REGION": "us-central1"
     }
   },
   "files": {
