@@ -107,7 +107,6 @@
         "repository": "web-apps",
         "projectId": "replace-artifact-project"
       },
-      "runRegion": "us-central1",
       "imageName": "app-backend"
     },
     "envs": {
