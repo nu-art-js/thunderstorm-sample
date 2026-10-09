@@ -21,7 +21,7 @@ Then from repo root:
 bash build-and-install.sh init
 ```
 
-This repo’s `build-and-install.sh` injects `--ts-version` from [`version-thunderstorm.json`](version-thunderstorm.json) (currently **0.500.10**). The upstream BAI wrapper still defaults to `~0.401.0` and does **not** read that file. Always go through this script.
+This repo’s `build-and-install.sh` injects `--ts-version` from [`version-thunderstorm.json`](version-thunderstorm.json) (currently **0.500.11**). The upstream BAI wrapper still defaults to `~0.401.0` and does **not** read that file. Always go through this script.
 
 Confirm after init:
 
@@ -34,7 +34,7 @@ If you see `0.401.x`, you bypassed the wrapper. Re-run with the hack:
 
 ```bash
 bash build-and-install.sh init --ts-version="$(python3 -c "import json; print(json.load(open('version-thunderstorm.json'))['version'])")"
-# or: TS_VERSION=0.500.10 bash build-and-install.sh init
+# or: TS_VERSION=0.500.11 bash build-and-install.sh init
 ```
 
 Never `bai -i -up=<subset>` — that rewrites a broken `pnpm-workspace.yaml`.
