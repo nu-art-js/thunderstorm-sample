@@ -13,6 +13,10 @@ set -e
 # Never write a key inside the git worktree. Never `gcloud config set`.
 # gcloud CLI does not use GAC by itself — service-account keys must be activated.
 
+# Deploy SA slug, the same one passed to scripts/create-deploy-sa.sh <slug> <env>.
+# Key: $HOME/.config/gcloud/<slug>-<env>-deploy.json. DEPLOY_SA_SLUG overrides.
+SA_SLUG="${DEPLOY_SA_SLUG:-replace-slug}"
+
 cred_type() {
 	python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("type",""))' "$1" 2>/dev/null || true
 }
@@ -52,11 +56,10 @@ resolve_sa_key() {
 		return
 	fi
 
-	shopt -s nullglob
-	local keys=("${HOME}"/.config/gcloud/*-*-deploy.json "${HOME}"/.config/gcloud/*-staging-deploy.json)
-	shopt -u nullglob
-	if [ ${#keys[@]} -gt 0 ]; then
-		echo "${keys[0]}"
+	# This repo's own key only (never another project's *-deploy.json).
+	local named="${HOME}/.config/gcloud/${SA_SLUG}-${ENV}-deploy.json"
+	if [ -f "$named" ]; then
+		echo "$named"
 	fi
 }
 
