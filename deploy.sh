@@ -136,6 +136,12 @@ if [ -z "$ACTION" ] || [ -z "$VERSION" ]; then
 	echo "  env defaults to 'staging'. Prod requires DEPLOY_CONFIRM_PROD=yes."
 	echo "  units defaults to: ${DEFAULT_UNITS}"
 	echo "  Pass a comma list to ship a subset, e.g. ${BACKEND_UNIT}"
+	echo "  build/full, before compile: this repo must match origin/main with a clean"
+	echo "  tree. version-app.json is set to <version>, committed, and pushed when it"
+	echo "  differs. After the artifacts are pushed, v<version> is created on that"
+	echo "  commit and pushed. A failed build does not tag. An existing tag that"
+	echo "  already points there is kept. A tag on another commit is refused."
+	echo "  Submodules are not tagged."
 	echo "  Always passes -se=<env> so BAI Prepare writes config for that plane"
 	echo "  before compile. After the live action (success or fail) restores"
 	echo "  -se=local so the working tree is back on the emulator plane."
@@ -159,7 +165,119 @@ if [ "$ENV" = "prod" ] && [ "${DEPLOY_CONFIRM_PROD:-}" != "yes" ]; then
 	exit 1
 fi
 
+# A release ships the checked-out commit. Side branches and a stale local main
+# are refused for this repo and every submodule before any build or deploy.
+assert_repo_on_updated_main() {
+	local repo="$1"
+	local label="$2"
+	if ! git -C "$repo" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+		echo "Refusing release. ${label} is not a git checkout."
+		exit 1
+	fi
+	if ! git -C "$repo" fetch origin main; then
+		echo "Refusing release. Could not fetch origin main for ${label}."
+		exit 1
+	fi
+	local branch local_main remote_main
+	branch="$(git -C "$repo" branch --show-current)"
+	if [ "$branch" != "main" ]; then
+		echo "Refusing release. ${label} is on '${branch:-detached HEAD}', not main."
+		exit 1
+	fi
+	local_main="$(git -C "$repo" rev-parse --verify refs/heads/main 2>/dev/null || true)"
+	remote_main="$(git -C "$repo" rev-parse --verify refs/remotes/origin/main 2>/dev/null || true)"
+	if [ -z "$local_main" ] || [ -z "$remote_main" ] || [ "$local_main" != "$remote_main" ]; then
+		echo "Refusing release. ${label} local main (${local_main:-missing}) is not origin/main (${remote_main:-missing})."
+		exit 1
+	fi
+}
+
+assert_release_repos() {
+	local root path
+	root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	assert_repo_on_updated_main "$root" "app repo"
+	while IFS= read -r path; do
+		[ -z "$path" ] && continue
+		assert_repo_on_updated_main "${root}/${path}" "$path"
+	done < <(git -C "$root" config --file "${root}/.gitmodules" --get-regexp '^submodule\..*\.path$' | awk '{print $2}')
+}
+
+assert_release_repos
+
 ensure_gcloud
+
+# Write version-app.json. Exit 0 when it already matches, 2 when it changed.
+write_app_version_file() {
+	local root="$1"
+	python3 - "$root" "$VERSION" <<'PY'
+import json, sys
+from pathlib import Path
+root, version = sys.argv[1], sys.argv[2]
+path = Path(root) / "version-app.json"
+raw = path.read_text() if path.exists() else ""
+data = json.loads(raw) if raw else {}
+if not isinstance(data, dict):
+    sys.exit(1)
+if data.get("version") == version:
+    sys.exit(0)
+indent = "\t" if "\t" in raw else "  "
+data["version"] = version
+path.write_text(json.dumps(data, indent=indent) + "\n")
+sys.exit(2)
+PY
+}
+
+# Before compile. The version file has to be on the commit the artifact is built
+# from. The git tag comes later, only after that artifact has been pushed.
+prepare_app_version() {
+	local root version_status
+	root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	if [ -n "$(git -C "$root" status --porcelain)" ]; then
+		echo "Refusing release. The app repo has uncommitted changes:"
+		git -C "$root" status --porcelain
+		exit 1
+	fi
+	version_status=0
+	write_app_version_file "$root" || version_status=$?
+	if [ "$version_status" -eq 2 ]; then
+		echo "Setting version-app.json to ${VERSION}..."
+		git -C "$root" add -- version-app.json
+		git -C "$root" commit -m "$(cat <<EOF
+Set app version to ${VERSION}.
+
+EOF
+)"
+		git -C "$root" push origin HEAD
+	elif [ "$version_status" -ne 0 ]; then
+		echo "Refusing release. Could not write version-app.json."
+		exit 1
+	else
+		echo "version-app.json is already ${VERSION}."
+	fi
+}
+
+# After the artifacts exist. Tags the commit they were built from. The worktree
+# may be dirty from -se by then; the tag points at HEAD, not at those files.
+# Version tags are immutable. Submodules are not tagged.
+tag_app_version() {
+	local root tag head tagged
+	root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	tag="v${VERSION}"
+	head="$(git -C "$root" rev-parse HEAD)"
+	if git -C "$root" rev-parse --verify "refs/tags/${tag}" >/dev/null 2>&1; then
+		tagged="$(git -C "$root" rev-parse "${tag}^{commit}")"
+		if [ "$tagged" != "$head" ]; then
+			echo "Refusing release. ${tag} points at ${tagged}, not ${head}."
+			exit 1
+		fi
+		echo "${tag} already points at ${head}."
+	else
+		echo "Tagging ${tag} at ${head}..."
+		git -C "$root" tag "$tag" "$head"
+	fi
+	echo "Pushing ${tag}..."
+	git -C "$root" push origin "refs/tags/${tag}"
+}
 
 # Force-move the env-pointer tag (env/<env>) to the deployed version and push it.
 # Version tags (v<x.y.z>) are immutable history; env/<env> is a moving pointer that
@@ -244,7 +362,12 @@ trap restore_local EXIT
 case "$ACTION" in
 	build)
 		echo "Building and pushing v${VERSION} (env: ${ENV}; units: ${UNITS})..."
-		run_units --build-push-image="$VERSION"
+		prepare_app_version
+		if ! run_units --build-push-image="$VERSION"; then
+			echo "Build failed. v${VERSION} was not created."
+			exit 1
+		fi
+		tag_app_version
 		;;
 	deploy)
 		echo "Deploying v${VERSION} to ${ENV} (units: ${UNITS})..."
@@ -257,7 +380,13 @@ case "$ACTION" in
 		;;
 	full)
 		echo "Building, pushing, and deploying v${VERSION} to ${ENV} (units: ${UNITS})..."
-		if ! run_units --build-push-image="$VERSION" --deploy-image="$VERSION"; then
+		prepare_app_version
+		if ! run_units --build-push-image="$VERSION"; then
+			echo "Build failed. v${VERSION} was not created."
+			exit 1
+		fi
+		tag_app_version
+		if ! run_units --deploy-image="$VERSION" -nb; then
 			echo "One or more units failed. env/${ENV} not moved."
 			exit 1
 		fi
