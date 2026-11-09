@@ -281,6 +281,10 @@ class HttpRtdb:
 
 def backend_target(repo: Path, env: str) -> tuple[str, str, str, str, str]:
 	pkg_path = repo / 'app' / 'backend' / 'package.json'
+	if not pkg_path.exists():
+		pkg_path = repo / 'app' / 'backend' / '__package.json'
+	if not pkg_path.exists():
+		raise WalkError('app/backend/package.json is missing')
 	pkg = json.loads(pkg_path.read_text())
 	unit = pkg['unitConfig']
 	env_cfg = (unit.get('envs') or {}).get(env)
