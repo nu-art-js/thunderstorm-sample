@@ -81,9 +81,77 @@ install_apt_packages() {
 	apt_install "${missing[@]}"
 }
 
+# Playwright binds :443 as the agent user. The apt package also starts a service
+# these VMs cannot run (PID 1 is tini). Install the binary only.
+install_caddy() {
+	local bin="/usr/local/bin/caddy"
+	if ! package_installed libcap2-bin; then
+		run_root apt-get update
+		apt_install libcap2-bin
+	fi
+	if [[ ! -x "${bin}" ]]; then
+		local archive="/tmp/caddy-linux-amd64"
+		curl -fsSL "https://caddyserver.com/api/download?os=linux&arch=amd64" -o "${archive}"
+		run_root cp "${archive}" "${bin}"
+		run_root chmod 755 "${bin}"
+		rm -f "${archive}"
+	fi
+	if ! /usr/sbin/getcap "${bin}" 2>/dev/null | grep -q cap_net_bind_service; then
+		run_root /usr/sbin/setcap cap_net_bind_service=+ep "${bin}"
+	fi
+	"${bin}" version >/dev/null
+}
+
+install_mkcert() {
+	local bin="/usr/local/bin/mkcert"
+	if [[ -x "${bin}" ]]; then
+		return 0
+	fi
+	if ! package_installed libnss3-tools; then
+		run_root apt-get update
+		apt_install libnss3-tools
+	fi
+	local archive="/tmp/mkcert-linux-amd64"
+	curl -fsSL "https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64" -o "${archive}"
+	run_root cp "${archive}" "${bin}"
+	run_root chmod 755 "${bin}"
+	rm -f "${archive}"
+}
+
+# Cert names follow the first host in .cursor/test-hosts.txt.
+install_test_certs() {
+	local cert_dir="${root}/.config/dev-proxy/certs"
+	local apex caroot pem key
+	apex="$(awk 'NF && $1 !~ /^#/ {print $1; exit}' "${root}/.cursor/test-hosts.txt")"
+	if [[ -z "${apex}" ]]; then
+		return 0
+	fi
+	pem="${cert_dir}/${apex}.pem"
+	key="${cert_dir}/${apex}-key.pem"
+	caroot="${HOME}/.local/share/mkcert"
+	if [[ -f "${pem}" && -f "${key}" ]]; then
+		return 0
+	fi
+	install_mkcert
+	mkdir -p "${cert_dir}" "${caroot}"
+	run_root env CAROOT="${caroot}" /usr/local/bin/mkcert -install
+	run_root chown -R "$(id -un):$(id -gn)" "${caroot}"
+	CAROOT="${caroot}" /usr/local/bin/mkcert -cert-file "${pem}" -key-file "${key}" \
+		"${apex}" "*.${apex}"
+}
+
+install_test_hosts() {
+	bash "${root}/.cursor/ensure-test-hosts.sh"
+}
+
 install_apt_packages
 install_gcloud
 install_docker
+if [[ -s "${root}/.cursor/test-hosts.txt" ]]; then
+	install_caddy
+	install_test_hosts
+	install_test_certs
+fi
 # Cursor clones without submodules. SSH git@ URLs fail on Cloud; use HTTPS.
 git -c url.https://github.com/.insteadOf=git@github.com: submodule update --init --recursive
 # Do not run `build-and-install.sh init` here. It OOMs the Cloud Build.

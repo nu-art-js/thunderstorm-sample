@@ -191,6 +191,16 @@ while IFS= read -r -d '' trash; do
 	done < <(run_root find "${trash}" -mindepth 1 -maxdepth 1 -type d -print0)
 done < <(run_root find "${root}" \( -type d \( -name node_modules -o -name .git \) -prune \) -o \( -type d -name .trash -print0 \))
 
+# Named test hosts are optional. This checkout has none, so Caddy stays unused.
+if [[ -s "${root}/.cursor/test-hosts.txt" ]]; then
+	bash "${root}/.cursor/ensure-test-hosts.sh"
+	if [[ ! -x /usr/local/bin/caddy ]]; then
+		echo "caddy is not installed" >&2
+		exit 1
+	fi
+	/usr/local/bin/caddy version
+fi
+
 if [[ "${git_error}" -ne 0 ]]; then
 	exit "${git_error}"
 fi

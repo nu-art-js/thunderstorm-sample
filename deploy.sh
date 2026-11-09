@@ -183,6 +183,10 @@ if [ -z "$ACTION" ] || [ -z "$VERSION_ARG" ]; then
 	echo "  Cloud Run revision is serving, walk releases/<semver>.json from the"
 	echo "  previous version up to this tag and PATCH /_config/default and"
 	echo "  /_config/app. build does not. The same tag twice does not patch again."
+	echo "  deploy/full then smoke the units just shipped, before env/<env> moves."
+	echo "  Probes come from deploy_smoke.py. A missing public host or hostingSite"
+	echo "  is skipped. A failure rolls that plane back to the previous env/<env>"
+	echo "  version once and exits non-zero. build does not smoke."
 	echo ""
 	echo "  A clean cursor/* checkout is moved onto origin/main before the release."
 	echo "  Any other branch is refused. local main must match origin/main."
@@ -437,6 +441,44 @@ apply_rtdb_config_deltas() {
 	fi
 }
 
+# Previous live semver, from the env/<env> tag, before this deploy moves it.
+# Empty when the plane has no version tag yet.
+previous_live_version() {
+	PYTHONPATH="$root" python3 - "$root" "$ENV" <<'PY'
+import sys
+from pathlib import Path
+from deploy_rtdb_deltas import GitRepo
+print(GitRepo(Path(sys.argv[1])).env_version(sys.argv[2]) or "")
+PY
+}
+
+# After the units are deployed and config deltas are applied. Before env/<env>.
+# Failure rolls back once, unless this deploy is already that rollback.
+smoke_or_rollback() {
+	local previous
+	echo "Deployment smoke -> v${VERSION} (${ENV})..."
+	if python3 "${root}/deploy_smoke.py" --version "$VERSION" --env "$ENV" --repo "$root" --units "$UNITS"; then
+		return 0
+	fi
+	echo "Deployment smoke failed for v${VERSION} (${ENV})."
+	if [ "${DEPLOY_SMOKE_ROLLBACK:-}" = 1 ]; then
+		echo "Rollback smoke failed. env/${ENV} not moved."
+		exit 1
+	fi
+	previous="$(previous_live_version)"
+	if [ -z "$previous" ] || [ "$previous" = "$VERSION" ]; then
+		echo "No earlier ${ENV} version to roll back to. env/${ENV} not moved."
+		exit 1
+	fi
+	echo "Rolling ${ENV} back to ${previous}."
+	if ! DEPLOY_SMOKE_ROLLBACK=1 bash "${root}/deploy.sh" deploy "$previous" "$ENV" "$UNITS"; then
+		echo "Rollback deploy failed. env/${ENV} not moved. ${ENV} may still be serving v${VERSION}."
+		exit 1
+	fi
+	echo "Rolled ${ENV} back to ${previous}. v${VERSION} is not the live pointer."
+	exit 1
+}
+
 # One BAI invocation for the whole unit list. -up is repeatable, and units in
 # the same phase run together. A second process per unit only repeats startup.
 run_units() {
@@ -574,6 +616,7 @@ case "$ACTION" in
 			exit 1
 		fi
 		apply_rtdb_config_deltas
+		smoke_or_rollback
 		tag_env_pointer
 		;;
 	full)
@@ -595,6 +638,7 @@ case "$ACTION" in
 			exit 1
 		fi
 		apply_rtdb_config_deltas
+		smoke_or_rollback
 		tag_env_pointer
 		;;
 	*)
